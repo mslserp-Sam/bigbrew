@@ -20,7 +20,7 @@
     --background: #fff;
     --text: #4A332D;
     --check: #4A332D;
-    --disabled: #c3c8de;
+    --disabled: #cc6f58;
     background: var(--background);
     border-radius: 5px;
     position: relative;
