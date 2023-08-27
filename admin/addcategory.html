@@ -211,8 +211,8 @@
                                     Product</span> <span class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="productlist.html">Product List</a></li>
-                                <li><a href="addproduct.html" class="active">Add Product</a></li>
-                                <li><a href="addcategory.html">Category</a></li>
+                                <li><a href="addproduct.html">Add Product</a></li>
+                                <li><a href="addcategory.html" class="active">Category</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
@@ -433,75 +433,103 @@
             <div class="content">
                 <div class="page-header mt-5">
                     <div class="page-title">
-                        <h4>Product Add</h4>
-                        <h6>Create new product</h6>
+                        <h4>Category Add</h4>
+                        <h6>Create new Category</h6>
                     </div>
                 </div>
-
                 <div class="card">
+                    <input type="hidden" id="reloaderT" onchange="cateDatatable()" value="0">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label>Product Name</label>
-                                    <input type="text" id="productName" required>
-                                    <label id="errorProdName"></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Category</label>
-                                    <select class="select" id="getCategory" required>
-
-                                    </select>
+                                    <label>Category Name</label>
+                                    <input type="text" id="categoryName" required>
                                     <label id="errorCategory"></label>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>SKU</label>
-                                    <input type="text" id="productSku" required>
-                                    <label id="errorSku"></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Price</label>
-                                    <input class="form-control" type="number" id="productGrande" placeholder="Grande"
-                                        required>
-                                    <label class="mb-2" id="errorGrande"></label>
-                                    <input class="form-control" type="number" id="productMedio" placeholder="Medio"
-                                        required>
-                                    <label id="errorMedio"></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label> Status</label>
-                                    <select class="select" id="productStatus" required>
-                                        <option value="Closed" selected>Closed</option>
-                                        <option value="Open">Open</option>
-                                    </select>
-                                    <label id="errorStatus"></label>
-                                </div>
-                            </div>
+
                             <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label> Product Image</label>
-                                    <div class="image-upload">
-                                        <input type="file" id="productImage">
-                                        <div class="image-uploads">
-                                            <img src="../assets/img/icons/upload.svg" alt="img" required>
-                                            <h4>Drag and drop a file to upload</h4>
+                                <a id="SubmitBtnCategory" class="btn btn-submit me-2">Submit</a>
+                                <!-- <a href="productlist.html" class="btn btn-cancel">Cancel</a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="table-top">
+                            <div class="search-set">
+                                <!-- <div class="search-path">
+                                    <a class="btn btn-filter" id="filter_search">
+                                        <img src="../assets/img/icons/filter.svg" alt="img">
+                                        <span><img src="../assets/img/icons/closes.svg" alt="img"></span>
+                                    </a>
+                                </div> -->
+                                <div class="search-input">
+                                    <a class="btn btn-searchset"><img src="../assets/img/icons/search-white.svg"
+                                            alt="img"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="card" id="filter_inputs">
+                            <div class="card-body pb-0">
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <select class="select">
+                                                <option>Choose Category</option>
+                                                <option>Computers</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <label id="errorImage"></label>
+                                    <div class="col-lg-2 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <select class="select">
+                                                <option>Choose Sub Category</option>
+                                                <option>Fruits</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <select class="select">
+                                                <option>Choose Sub Brand</option>
+                                                <option>Iphone</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+                                        <div class="form-group">
+                                            <a class="btn btn-filters ms-auto"><img
+                                                    src="../assets/img/icons/search-whites.svg" alt="img"></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <a id="SubmitBtn" class="btn btn-submit me-2">Submit</a>
-                                <a href="productlist.html" class="btn btn-cancel">Cancel</a>
-                            </div>
+                        </div> -->
+
+                        <div class="table-responsive">
+                            <table class="table  dataCatList">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <label class="checkboxs">
+                                                <input type="checkbox" id="select-all">
+                                                <span class="checkmarks"></span>
+                                            </label>
+                                        </th>
+                                        <th>Category Name</th>
+                                        <th>Category ID</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="catList">
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -531,7 +559,8 @@
     <script type="module" src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js"></script>
     <script type="module" src="../js/database.js"></script>
     <script type="module" src="../js/addproduct/productCategory.js"></script>
-    <script type="module" src="../js/addproduct/productAddButton.js"></script>
+    <script type="module" src="../js/addproduct/addCategory.js"></script>
+    <script type="module" src="../js/addproduct/categoryList.js"></script>
 </body>
 
 </html>
