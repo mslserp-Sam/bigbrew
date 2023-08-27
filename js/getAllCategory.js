@@ -34,7 +34,6 @@ get(child(dbref, `Product_List`)).then((snapchat)=>{
     
 })
 
-
 //get all products
 function allProducts(key){
     var listKey = key;
@@ -164,7 +163,6 @@ function allProducts(key){
                                 $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty').text(getQuantity);
                                 $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'price').text(getTotalPrice);
                                 $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")).val(getTotalPrice);
-                                $('.toggle img').data('data-quan', 'something');
                             }
                             else
                             {
@@ -173,7 +171,7 @@ function allProducts(key){
                                 localStorage.setItem("prod",JSON.stringify(fullData));
                                 var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
                                 $('.product-table').append(`
-                                        <ul class="product-lists">
+                                        <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove">
                                             <li>
                                                 <div class="productimg">
                                                     <div class="productimgs">
@@ -195,7 +193,7 @@ function allProducts(key){
                                             </li>
                                             <li></li>
                                             <li>
-                                                <a class="confirm-text" href="javascript:void(0);">
+                                                <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn">
                                                     <img src="assets/img/icons/delete-2.svg" alt="img">                                            
                                                 </a>
                                             </li>
@@ -208,10 +206,11 @@ function allProducts(key){
                         {
                            
                             prods = `["${btoa(getName)}"]`;
-                            var checker = localStorage.setItem("prod",prods);
+                            var checker = localStorage.setItem("prod",prods);                         
+                           
                             var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
                             $('.product-table').append(`
-                                    <ul class="product-lists">
+                                    <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove">
                                         <li>
                                             <div class="productimg">
                                                 <div class="productimgs">
@@ -233,7 +232,7 @@ function allProducts(key){
                                         </li>
                                         <li></li>
                                         <li>
-                                            <a class="confirm-text" href="javascript:void(0);">
+                                            <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn">
                                                 <img src="assets/img/icons/delete-2.svg" alt="img">                                            
                                             </a>
                                         </li>
@@ -241,12 +240,27 @@ function allProducts(key){
                                     </ul>
                             `)
                         }
-                        
+                        $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn`).on('click',(e)=>{
+                            var checker2 = localStorage.getItem("prod");
+                            console.log(checker2)
+                            var fullData = JSON.parse(checker2);
+                            const indexz = fullData.indexOf(btoa(getName)); 
+                            if(indexz > -1) 
+                            {
+                                var tempPrice = parseInt($('.totalCash').html());
+                                fullData.splice(indexz, 1);
+                                localStorage.setItem('prod',JSON.stringify(fullData))               
+                                $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove`).remove();
+                                console.log(getTotalPrice,tempPrice)
+                                tempPrice = parseInt(tempPrice) - parseInt(getTotalPrice);
+                                $('.totalCash').html(tempPrice);
+                            }
+                        })
                         var getallPrice = document.getElementsByClassName('h5Price');
                         $('.h4Items').html(`Total items : ${getallPrice.length}`);
                         var oo = 0;
                         $('.product-table input[type="hidden"]').each(function() {
-                            console.log($(this).data('data-name'));
+                            console.log(parseInt($(this).val()));
                             oo += parseInt($(this).val())
                             $('.totalCash').html(oo);
                             $('#printBody').append(`
@@ -525,34 +539,144 @@ function allProducts(key){
                         var getImage = $('#forImage').val();
                         var getName = $('#forName').val();
                         var getQuantity = parseInt($('.quan').html());
-                        $('.product-table').append(`
-                                <ul class="product-lists">
-                                    <li>
-                                        <div class="productimg">
-                                            <div class="productimgs">
-                                                <img src="${getImage}" alt="img">
-                                            </div>
-                                            <div class="productcontet">
-                                                <h4>${getName}
-                                                    <a href="javascript:void(0);" class="ms-2"
-                                                        data-bs-toggle="modal" data-bs-target="#edit"><img
-                                                            src="assets/img/icons/edit-5.svg" alt="img"></a>
-                                                </h4>
-                                                <div class="productlinkset">
-                                                    <h5 class="h5Price">₱ ${getTotalPrice}</h5>
-                                                    <h5>Qty. ${getQuantity}</h5>
+                        var prods='';
+                        var checker = localStorage.getItem("prod");
+                        if(checker)
+                        {
+                            var fullData = JSON.parse(checker);
+                            var ans = fullData.includes(btoa(getName));                            
+                            console.log(fullData)
+                            if(ans)
+                            {
+                                var qtys = $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty').text(), prc = $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'price').text();
+                                console.log(getQuantity,qtys);
+                                console.log(getTotalPrice,prc)
+                                getQuantity = getQuantity + parseInt(qtys);
+                                getTotalPrice = getTotalPrice + parseInt(prc);
+                                $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty').text(getQuantity);
+                                $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'price').text(getTotalPrice);
+                                $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")).val(getTotalPrice);
+                            }
+                            else
+                            {
+                                fullData.push(`${btoa(getName)}`);
+                                console.log(fullData)
+                                localStorage.setItem("prod",JSON.stringify(fullData));
+                                var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
+                                $('.product-table').append(`
+                                        <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove">
+                                            <li>
+                                                <div class="productimg">
+                                                    <div class="productimgs">
+                                                        <img src="${getImage}" alt="img">
+                                                    </div>
+                                                    <div class="productcontet">
+                                                        <h4>${getName}
+                                                            <a href="javascript:void(0);" class="ms-2"
+                                                                data-bs-toggle="modal" data-bs-target="#edit"><img
+                                                                    src="assets/img/icons/edit-5.svg" alt="img"></a>
+                                                        </h4>
+                                                        <div class="productlinkset">
+                                                            <h5 class="h5Price">₱ <span  id="${prcID}price">${getTotalPrice}</span></h5>
+                                                            <h5>Qty. <span id="${qtyID}qty">${getQuantity}</span></h5>
+                                                        </div>
+                                                    
+                                                    </div>
                                                 </div>
-                                              
+                                            </li>
+                                            <li></li>
+                                            <li>
+                                                <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn">
+                                                    <img src="assets/img/icons/delete-2.svg" alt="img">                                            
+                                                </a>
+                                            </li>
+                                            <input id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}" type="hidden" value="${getTotalPrice}" data-data-quan="${getQuantity}" data-data-name="${getName}"/>
+                                        </ul>
+                                `)
+                            }
+                        }
+                        else
+                        {
+                           
+                            prods = `["${btoa(getName)}"]`;
+                            var checker = localStorage.setItem("prod",prods);                         
+                           
+                            var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
+                            $('.product-table').append(`
+                                    <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove">
+                                        <li>
+                                            <div class="productimg">
+                                                <div class="productimgs">
+                                                    <img src="${getImage}" alt="img">
+                                                </div>
+                                                <div class="productcontet">
+                                                    <h4>${getName}
+                                                        <a href="javascript:void(0);" class="ms-2"
+                                                            data-bs-toggle="modal" data-bs-target="#edit"><img
+                                                                src="assets/img/icons/edit-5.svg" alt="img"></a>
+                                                    </h4>
+                                                    <div class="productlinkset">
+                                                        <h5 class="h5Price">₱ <span  id="${prcID}price">${getTotalPrice}</span></h5>
+                                                        <h5>Qty. <span id="${qtyID}qty">${getQuantity}</span></h5>
+                                                    </div>
+                                                
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <li></li>
-                                    <li><a class="confirm-text" href="javascript:void(0);"><img
-                                                src="assets/img/icons/delete-2.svg" alt="img"></a></li>
+                                        </li>
+                                        <li></li>
+                                        <li>
+                                            <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn">
+                                                <img src="assets/img/icons/delete-2.svg" alt="img">                                            
+                                            </a>
+                                        </li>
+                                        <input id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}" type="hidden" value="${getTotalPrice}" data-data-quan="${getQuantity}" data-data-name="${getName}"/>
+                                    </ul>
+                            `)
+                        }
+                        $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn`).on('click',(e)=>{
+                            var checker2 = localStorage.getItem("prod");
+                            console.log(checker2)
+                            var fullData = JSON.parse(checker2);
+                            const indexz = fullData.indexOf(btoa(getName)); 
+                            if(indexz > -1) 
+                            {
+                                var tempPrice = parseInt($('.totalCash').html());
+                                fullData.splice(indexz, 1);
+                                localStorage.setItem('prod',JSON.stringify(fullData))               
+                                $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove`).remove();
+                                console.log(getTotalPrice,tempPrice)
+                                tempPrice = parseInt(tempPrice) - parseInt(getTotalPrice);
+                                $('.totalCash').html(tempPrice);
+                            }
+                        })
+                        // $('.product-table').append(`
+                        //         <ul class="product-lists">
+                        //             <li>
+                        //                 <div class="productimg">
+                        //                     <div class="productimgs">
+                        //                         <img src="${getImage}" alt="img">
+                        //                     </div>
+                        //                     <div class="productcontet">
+                        //                         <h4>${getName}
+                        //                             <a href="javascript:void(0);" class="ms-2"
+                        //                                 data-bs-toggle="modal" data-bs-target="#edit"><img
+                        //                                     src="assets/img/icons/edit-5.svg" alt="img"></a>
+                        //                         </h4>
+                        //                         <div class="productlinkset">
+                        //                             <h5 class="h5Price">₱ ${getTotalPrice}</h5>
+                        //                             <h5>Qty. ${getQuantity}</h5>
+                        //                         </div>
+                                              
+                        //                     </div>
+                        //                 </div>
+                        //             </li>
+                        //             <li></li>
+                        //             <li><a class="confirm-text" href="javascript:void(0);"><img
+                        //                         src="assets/img/icons/delete-2.svg" alt="img"></a></li>
                                     
-                                                <input type="hidden" value="${getTotalPrice}" />
-                                </ul>
-                        `)
+                        //                         <input type="hidden" value="${getTotalPrice}" />
+                        //         </ul>
+                        // `)
                         var getallPrice = document.getElementsByClassName('h5Price');
                         $('.h4Items').html(`Total items : ${getallPrice.length}`)
                         var oo = 0;
@@ -636,39 +760,4 @@ function allProducts(key){
 
 allProducts('wala');
 
-//get category
-
-
-
-//get all products
-
-// get(child(dbref, `Product_List`)).then((snapchat)=>{
-//     snapchat.forEach(category => {
-//         $('.product_container').append(` 
-//         <div class="tab_content" data-tab="${category.key}">
-//             <div class="row ">
-//                    ASDASD
-//             </div>  
-//         </div>`)
-//         get(child(dbref, `Product_List/${category.key}`)).then((snapchat)=>{
-//             snapchat.forEach(items => {
-//                 console.log(items.key)
-            
-//             });
-//         })
-    
-//     });
-// })
-
-
-
-
-
-
-
-{/* <li class="" id="headphone">
-<div class="product-details ">
-    <h6>yeah</h6>
-</div>
-</li> */}
    
