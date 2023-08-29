@@ -4,13 +4,13 @@ const db = getDatabase();
 const dbref = ref(db);
 const auth = getAuth();
 
-get(child(dbref, `Product_List`)).then((snapchat)=>{
+get(child(dbref, `Product_Category`)).then((snapchat)=>{
     $('#getCategory').append(`
         <option value="" selected>Choose Category</option>
     `);
     snapchat.forEach(element => {
         $('#getCategory').append(`
-                    <option value="${element.key}">${element.key}</option>
+                    <option value="${element.key}">${element.val().category}</option>
         `);
     });
     
