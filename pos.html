@@ -72,7 +72,7 @@
                         <div class="order-list">
                             <div class="orderid">
                                 <h4>Order List</h4>
-                                <h5>Transaction id : #65565</h5>
+                                <h5>Transaction id : #<span id="transacId"></span></h5>
                             </div>
                             <div class="actionproducts">
                                 <ul>
@@ -108,7 +108,7 @@
                             <div class="card-body pt-0">
                                 <div class="totalitem">
                                     <h4 class="h4Items">Total items : 0</h4>
-                                    <a href="javascript:void(0);">Clear all</a>
+                                    <a href="#" onclick="clearCart()">Clear all</a>
                                 </div>
                                 <div class="product-table">
                                     
@@ -971,10 +971,7 @@
 
     <script src="assets/js/script.js"></script>
     <script type="module" src="js/database.js"></script>
-    <script type="module">
-        
-        
-    </script>
+    <script src="/js/func.js"></script>
     <script type="module" src="js/getAllCategory.js"></script>
     <script type="module" src="js/categorySelect.js"></script>
 </body>
