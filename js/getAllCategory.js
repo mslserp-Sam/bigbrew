@@ -23,6 +23,7 @@ function generateSerial() {
     $('#transacId').html(randomSerial);
     $('#transac').html(randomSerial);
 }
+
 localStorage.removeItem('prod');
 get(child(dbref, `Product_Category`)).then((snapchat)=>{
     snapchat.forEach(category => {
@@ -247,77 +248,133 @@ function allProducts(key)
                 }
             
             })
-            
-       
-            $('#cashPupop').on('click', function(){
+           
+            $('#errorHandlerCash').hide();
+            $('#proceedClick').on('click', ()=>{
                 var totalCASH = parseFloat($('.totalCash').html());
-                if(totalCASH != 0)
-                {
-                    Swal.fire({
-                        
-                        title: 'Cash Amount',
-                        html: `
-                                <div class="form-group">
-                                    <label style="float: left; ">Total Price: ${totalCASH}</label>
-                                    <input type="number" class="form-control" id="insertedCashAmount" required>
+                $('#totalCashChange').html("");
+                if(totalCASH != 0){
+                    if($('#insertedCashAmount').val() < totalCASH){
+                        $('#errorHandlerCash').show();
+                    }
+                    else{
+                        $('#closeModal').trigger('click');
+                        $('#errorHandlerCash').hide();
+                        var cashAm = $('#insertedCashAmount').val();
+                        var totalAm = totalCASH;
+                        var changeAm = cashAm - totalAm;
+                        $('#totalCashChange').append(`                            
+                                <div class="m-2 divDashed">
+                                    <label class="totalLabel">
+                                        Total
+                                    </label>
+                                    <label class="totalLabel" style="float: right;">
+                                        ₱ ${parseFloat(totalAm)}
+                                    </label>
                                 </div>
-                                `,
-                        showCancelButton: true,
-                        confirmButtonColor: '#4A332D',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Confirm'
-                        
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            if($('#insertedCashAmount').val() < totalCASH){
-                                Swal.fire({
-                                    icon: 'error',
-                                    text: 'Insufficient cash amount',
-                            
-                                })
-                            }else{
-                                var cashAm = $('#insertedCashAmount').val();
-                                var totalAm = totalCASH;
-                                var changeAm = cashAm - totalAm;
-                                $('#totalCashChange').append(`                            
-                                    <div class="m-2 divDashed">
-                                        <label class="totalLabel">
-                                            Total
-                                        </label>
-                                        <label class="totalLabel" style="float: right;">
-                                            ₱ ${parseFloat(totalAm)}
-                                        </label>
-                                    </div>
-                                    <div class="divMargins">
-                                        <label >
-                                            Cash
-                                        </label>
-                                        <label style="float: right;">
-                                            ₱ ${parseFloat(cashAm)}
-                                        </label>
-                                    </div>
-                                    <div class="m-2">
-                                        <label >
-                                            Change
-                                        </label>
-                                        <label style="float: right;">
-                                            ₱ ${parseFloat(changeAm)}
-                                        </label>
-                                    </div>
-                                `)
-                                var printableDiv = document.getElementById('printableDiv').innerHTML;
-                                var originalContent = document.body.innerHTML;
-                                document.body.innerHTML = printableDiv;
-                                window.print();
-                                document.body.innerHTML = originalContent;
-                            }
-                            
-                        }
-                    
-                    })
+                                <p class="centered" style="font-size: 15px;">Payment Receipt</p>
+                                <div class="divMargins">
+                                    <label >
+                                        Cash
+                                    </label>
+                                    <label style="float: right;">
+                                        ₱ ${parseFloat(cashAm)}
+                                    </label>
+                                </div>
+                                <div class="m-2">
+                                    <label >
+                                        Change
+                                    </label>
+                                    <label style="float: right;">
+                                        ₱ ${parseFloat(changeAm)}
+                                    </label>
+                                </div>
+                            `)
+                        var printableDiv = document.getElementById('printableDiv').innerHTML;
+                        // var originalContent = document.body.innerHTML;
+                        // document.body.innerHTML = printableDiv;
+                        // window.print();
+                        // document.body.innerHTML = originalContent;
+                        var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
+                        winPrint.document.write(`${printableDiv}`);
+                        winPrint.document.close();
+                        winPrint.focus();
+                        winPrint.print();
+                        winPrint.close(); 
+                    }
                 }
-
             })
+             
+            // $('#cashPupop').on('click', function(){
+            //     var totalCASH = parseFloat($('.totalCash').html());
+            //     if(totalCASH != 0)
+            //     {
+            //         Swal.fire({
+                        
+            //             title: 'Cash Amount',
+            //             html: `
+            //                     <div class="form-group">
+            //                         <label style="float: left; ">Total Price: ${totalCASH}</label>
+            //                         <input type="number" class="form-control" id="insertedCashAmount" required>
+            //                     </div>
+            //                     `,
+            //             showCancelButton: true,
+            //             confirmButtonColor: '#4A332D',
+            //             cancelButtonColor: '#d33',
+            //             confirmButtonText: 'Confirm'
+                        
+            //         }).then((result) => {
+            //             if (result.isConfirmed) {
+            //                 if($('#insertedCashAmount').val() < totalCASH){
+            //                     Swal.fire({
+            //                         icon: 'error',
+            //                         text: 'Insufficient cash amount',
+                            
+            //                     })
+            //                 }else{
+            //                     var cashAm = $('#insertedCashAmount').val();
+            //                     var totalAm = totalCASH;
+            //                     var changeAm = cashAm - totalAm;
+            //                     $('#totalCashChange').append(`                            
+            //                         <div class="m-2 divDashed">
+            //                             <label class="totalLabel">
+            //                                 Total
+            //                             </label>
+            //                             <label class="totalLabel" style="float: right;">
+            //                                 ₱ ${parseFloat(totalAm)}
+            //                             </label>
+            //                         </div>
+            //                         <p class="centered" style="font-size: 15px;">Payment Receipt</p>
+            //                         <div class="divMargins">
+            //                             <label >
+            //                                 Cash
+            //                             </label>
+            //                             <label style="float: right;">
+            //                                 ₱ ${parseFloat(cashAm)}
+            //                             </label>
+            //                         </div>
+            //                         <div class="m-2">
+            //                             <label >
+            //                                 Change
+            //                             </label>
+            //                             <label style="float: right;">
+            //                                 ₱ ${parseFloat(changeAm)}
+            //                             </label>
+            //                         </div>
+            //                     `)
+            //                     var printableDiv = document.getElementById('printableDiv').innerHTML;
+            //                     var originalContent = document.body.innerHTML;
+            //                     document.body.innerHTML = printableDiv;
+            //                     window.print();
+            //                     document.body.innerHTML = originalContent;
+            //                 }
+                            
+            //             }
+                    
+            //         })
+            //     }
+
+            // })
            
             $('.size1').on('click', function(){
                 $('#grandeCb').val("1")
@@ -450,15 +507,15 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             `)
             $('#printBody').append(`
                 <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-                    <td class="haft">
-                        <h4 class="printProd">${getName}</h4>
-                        <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
+                    <td style="border: 1px solid #fff;">
+                        <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
+                        <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
                     </td>
-                    <td>
+                    <td style="text-align: center !important; border: 1px solid #fff;">
                         <h4 class="printQty">${getQuantity}</h4>
                     </td>
-                    <td style="float: right;">
-                        <h4 class="printTotal">${getTotalPrice + parseInt(addOnsTotal)}</h4>
+                    <td style="text-align: center !important; border: 1px solid #fff;">
+                        <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice + parseInt(addOnsTotal)}</h4>
                     </td>
                 </tr>
             `);
@@ -528,15 +585,15 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         
         $('#printBody').append(`
             <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-                <td class="haft">
-                    <h4 class="printProd">${getName}</h4>
-                    <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
+                <td style="border: 1px solid #fff;">
+                    <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
+                    <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
                 </td>
-                <td>
+                <td style="text-align: center !important; border: 1px solid #fff;">
                     <h4 class="printQty">${getQuantity}</h4>
                 </td>
-                <td style="float: right;">
-                    <h4 class="printTotal">${getTotalPrice + parseInt(addOnsTotal)}</h4>    
+                <td style="text-align: center !important; border: 1px solid #fff;">
+                    <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice + parseInt(addOnsTotal)}</h4>    
                 </td>
             </tr>
         `);
