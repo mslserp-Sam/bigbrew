@@ -3,7 +3,24 @@ import { signInWithEmailAndPassword, getAuth, signOut, onAuthStateChanged } from
 const db = getDatabase();
 const dbref = ref(db);
 const auth = getAuth();
+const date = new Date();
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+const theYear = date.getFullYear();
+const theMonth = date.getMonth();
+const theDate = date.getDate();
+const theDay = date.getDay();
+$('#transacDate').text(`${days[theDay]}, ${months[theMonth]} ${theDate},  ${theYear}`)
+
+get(child(dbref, `Pos_Accounts`)).then((snapchat)=>{
+    snapchat.forEach(element => {       
+      if(element.val().pin == localStorage.getItem('cashier'))
+      {
+        $('#cashierName').text(element.val().FullName);
+      }
+    });
+  })
 generateSerial()
 function generateSerial() {
     'use strict';
@@ -264,37 +281,38 @@ function allProducts(key)
                         var totalAm = totalCASH;
                         var changeAm = cashAm - totalAm;
                         $('#totalCashChange').append(`                            
-                                <div class="m-2 divDashed">
-                                    <label class="totalLabel">
-                                        Total
-                                    </label>
-                                    <label class="totalLabel" style="float: right;">
-                                        ₱ ${parseFloat(totalAm)}
-                                    </label>
-                                </div>
-                                <p class="centered" style="font-size: 15px;">Payment Receipt</p>
-                                <div class="divMargins">
-                                    <label >
-                                        Cash
-                                    </label>
-                                    <label style="float: right;">
-                                        ₱ ${parseFloat(cashAm)}
-                                    </label>
-                                </div>
-                                <div class="m-2">
-                                    <label >
-                                        Change
-                                    </label>
-                                    <label style="float: right;">
-                                        ₱ ${parseFloat(changeAm)}
-                                    </label>
-                                </div>
+                                <tr class="m-2 divDashed" style="width: 100vw !important;">
+                                    <td style="font-size: 13px; width: 100vw !important;">
+                                        <label class="totalLabel">
+                                            Total
+                                        </label>
+                                        <label class="totalLabel" style="float: right;">
+                                            ₱ ${parseFloat(totalAm)}
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr class="divMargins" style="width: 100vw !important;">
+                                    <td style="font-size: 13px; width: 100vw !important;">
+                                        <label >
+                                            Cash
+                                        </label>
+                                        <label style="float: right;">
+                                            ₱ ${parseFloat(cashAm)}
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr class="m-2" style="width: 100vw !important;">
+                                    <td style="font-size: 13px; width: 100vw !important;">
+                                        <label >
+                                            Change
+                                        </label>
+                                        <label style="float: right;">
+                                            ₱ ${parseFloat(changeAm)}
+                                        </label>
+                                    </td>
+                                </tr>
                             `)
                         var printableDiv = document.getElementById('printableDiv').innerHTML;
-                        // var originalContent = document.body.innerHTML;
-                        // document.body.innerHTML = printableDiv;
-                        // window.print();
-                        // document.body.innerHTML = originalContent;
                         var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
                         winPrint.document.write(`${printableDiv}`);
                         winPrint.document.close();
@@ -304,77 +322,6 @@ function allProducts(key)
                     }
                 }
             })
-             
-            // $('#cashPupop').on('click', function(){
-            //     var totalCASH = parseFloat($('.totalCash').html());
-            //     if(totalCASH != 0)
-            //     {
-            //         Swal.fire({
-                        
-            //             title: 'Cash Amount',
-            //             html: `
-            //                     <div class="form-group">
-            //                         <label style="float: left; ">Total Price: ${totalCASH}</label>
-            //                         <input type="number" class="form-control" id="insertedCashAmount" required>
-            //                     </div>
-            //                     `,
-            //             showCancelButton: true,
-            //             confirmButtonColor: '#4A332D',
-            //             cancelButtonColor: '#d33',
-            //             confirmButtonText: 'Confirm'
-                        
-            //         }).then((result) => {
-            //             if (result.isConfirmed) {
-            //                 if($('#insertedCashAmount').val() < totalCASH){
-            //                     Swal.fire({
-            //                         icon: 'error',
-            //                         text: 'Insufficient cash amount',
-                            
-            //                     })
-            //                 }else{
-            //                     var cashAm = $('#insertedCashAmount').val();
-            //                     var totalAm = totalCASH;
-            //                     var changeAm = cashAm - totalAm;
-            //                     $('#totalCashChange').append(`                            
-            //                         <div class="m-2 divDashed">
-            //                             <label class="totalLabel">
-            //                                 Total
-            //                             </label>
-            //                             <label class="totalLabel" style="float: right;">
-            //                                 ₱ ${parseFloat(totalAm)}
-            //                             </label>
-            //                         </div>
-            //                         <p class="centered" style="font-size: 15px;">Payment Receipt</p>
-            //                         <div class="divMargins">
-            //                             <label >
-            //                                 Cash
-            //                             </label>
-            //                             <label style="float: right;">
-            //                                 ₱ ${parseFloat(cashAm)}
-            //                             </label>
-            //                         </div>
-            //                         <div class="m-2">
-            //                             <label >
-            //                                 Change
-            //                             </label>
-            //                             <label style="float: right;">
-            //                                 ₱ ${parseFloat(changeAm)}
-            //                             </label>
-            //                         </div>
-            //                     `)
-            //                     var printableDiv = document.getElementById('printableDiv').innerHTML;
-            //                     var originalContent = document.body.innerHTML;
-            //                     document.body.innerHTML = printableDiv;
-            //                     window.print();
-            //                     document.body.innerHTML = originalContent;
-            //                 }
-                            
-            //             }
-                    
-            //         })
-            //     }
-
-            // })
            
             $('.size1').on('click', function(){
                 $('#grandeCb').val("1")
@@ -598,4 +545,12 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             </tr>
         `);
     }
+}
+function transactions(prodName, qty, price, totalPrice)
+{  
+    var tans = localStorage.getItem('tran');
+
+    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+tans), {
+        Cash_onhand: result.value
+    })
 }
