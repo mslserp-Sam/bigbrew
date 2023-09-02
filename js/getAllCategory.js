@@ -272,7 +272,6 @@ function allProducts(key)
                                         ₱ ${parseFloat(totalAm)}
                                     </label>
                                 </div>
-<<<<<<< HEAD
                                 <p class="centered" style="font-size: 15px;">Payment Receipt</p>
                                 <div class="divMargins">
                                     <label >
@@ -303,62 +302,6 @@ function allProducts(key)
                         winPrint.print();
                         winPrint.close(); 
                     }
-=======
-                                `,
-                        showCancelButton: true,
-                        confirmButtonColor: '#4A332D',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Confirm'
-                        
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            if($('#insertedCashAmount').val() < totalCASH){
-                                Swal.fire({
-                                    icon: 'error',
-                                    text: 'Insufficient cash amount',
-                            
-                                })
-                            }else{
-                                var cashAm = $('#insertedCashAmount').val();
-                                var totalAm = totalCASH;
-                                var changeAm = cashAm - totalAm;
-                                $('#totalCashChange').append(`                            
-                                    <div class="m-2 divDashed">
-                                        <label class="totalLabel">
-                                            Total
-                                        </label>
-                                        <label class="totalLabel" style="float: right;">
-                                            ₱ ${parseFloat(totalAm)}
-                                        </label>
-                                    </div>
-                                    <div class="divMargins">
-                                        <label >
-                                            Cash
-                                        </label>
-                                        <label style="float: right;">
-                                            ₱ ${parseFloat(cashAm)}
-                                        </label>
-                                    </div>
-                                    <div class="m-2">
-                                        <label >
-                                            Change
-                                        </label>
-                                        <label style="float: right;">
-                                            ₱ ${parseFloat(changeAm)}
-                                        </label>
-                                    </div>
-                                `)
-                                var printableDiv = document.getElementById('printableDiv').innerHTML;
-                                var originalContent = document.body.innerHTML;
-                                document.body.innerHTML = printableDiv;
-                                window.print();
-                                document.body.innerHTML = originalContent;
-                            }
-                            
-                        }
-                    
-                    })
->>>>>>> c01e0e8ded47ad87ee82e2d2c065589fa05a5c89
                 }
             })
              
@@ -564,15 +507,9 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             `)
             $('#printBody').append(`
                 <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-<<<<<<< HEAD
                     <td style="border: 1px solid #fff;">
                         <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
                         <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
-=======
-                    <td style="width: 50%">
-                        <h4 class="printProd">${getName}</h4>
-                        <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
->>>>>>> c01e0e8ded47ad87ee82e2d2c065589fa05a5c89
                     </td>
                     <td style="text-align: center !important; border: 1px solid #fff;">
                         <h4 class="printQty">${getQuantity}</h4>
@@ -648,15 +585,9 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         
         $('#printBody').append(`
             <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-<<<<<<< HEAD
                 <td style="border: 1px solid #fff;">
                     <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
                     <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
-=======
-                <td style="width: 50%">
-                    <h4 class="printProd">${getName}</h4>
-                    <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
->>>>>>> c01e0e8ded47ad87ee82e2d2c065589fa05a5c89
                 </td>
                 <td style="text-align: center !important; border: 1px solid #fff;">
                     <h4 class="printQty">${getQuantity}</h4>
