@@ -5,6 +5,16 @@
     border-radius: 5px;
     color: #fff;
 }
+.btn-brown
+{
+  background-color: #6C4A3F;
+  color: #f0f0f0;
+}
+.btn-brown:hover
+{
+  background-color: #967367;
+  color: #cecece;
+}
 #sweetCard{
     background: #F5F2EA;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -16,7 +26,7 @@
     color: #6C4A3F;
     font-size: 15px;
 }
-#checklist {
+.checklist {
     --background: #fff;
     --text: #4A332D;
     --check: #4A332D;
@@ -24,14 +34,14 @@
     background: var(--background);
     border-radius: 5px;
     position: relative;
-    padding: 10px;
+    padding: 5px;
     display: grid;
     grid-template-columns: 30px auto;
-    align-items: center;
-    justify-content: center;
+    align-items: start;
+    justify-content: start;
   }
   
-  #checklist label {
+  .checklist label {
     color: var(--text);
     position: relative;
     cursor: pointer;
@@ -42,12 +52,12 @@
     font-weight: 700;
   }
   
-  #checklist label::before, #checklist label::after {
+  .checklist label::before, .checklist label::after {
     content: "";
     position: absolute;
   }
   
-  #checklist label::before {
+  .checklist label::before {
     height: 2px;
     width: 8px;
     left: -27px;
@@ -56,7 +66,7 @@
     transition: background 0.3s ease;
   }
   
-  #checklist label:after {
+  .checklist label:after {
     height: 4px;
     width: 4px;
     top: 8px;
@@ -64,7 +74,7 @@
     border-radius: 50%;
   }
   
-  #checklist input[type="radio"], #checklist input[type="checkbox"] {
+  .checklist input[type="radio"], .checklist input[type="checkbox"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     position: relative;
@@ -80,7 +90,7 @@
     margin-right: 20px;
   }
   
-  #checklist input[type="radio"]::before, #checklist input[type="radio"]::after, #checklist input[type="checkbox"]::before, #checklist input[type="checkbox"]::after {
+  .checklist input[type="radio"]::before, .checklist input[type="radio"]::after, .checklist input[type="checkbox"]::before, .checklist input[type="checkbox"]::after {
     content: "";
     position: absolute;
     height: 2px;
@@ -89,37 +99,37 @@
     border-radius: 2px;
   }
   
-  #checklist input[type="radio"]::before, #checklist input[type="checkbox"]::before {
+  .checklist input[type="radio"]::before, .checklist input[type="checkbox"]::before {
     width: 0px;
     right: 60%;
     transform-origin: right bottom;
   }
   
-  #checklist input[type="radio"]::after, #checklist input[type="checkbox"]::after {
+  .checklist input[type="radio"]::after, .checklist input[type="checkbox"]::after {
     width: 0px;
     left: 40%;
     transform-origin: left bottom;
   }
   
-  #checklist input[type="radio"]:checked::before, #checklist input[type="checkbox"]:checked::before {
+  .checklist input[type="radio"]:checked::before, .checklist input[type="checkbox"]:checked::before {
     animation: check-01 0.4s ease forwards;
   }
   
-  #checklist input[type="radio"]:checked::after, #checklist input[type="checkbox"]:checked::after {
+  .checklist input[type="radio"]:checked::after, .checklist input[type="checkbox"]:checked::after {
     animation: check-02 0.4s ease forwards;
   }
   
-  #checklist input[type="radio"]:checked + label, #checklist input[type="checkbox"]:checked + label {
+  .checklist input[type="radio"]:checked + label, .checklist input[type="checkbox"]:checked + label {
     color: var(--disabled);
     animation: move 0.3s ease 0.1s forwards;
   }
   
-  #checklist input[type="radio"]:checked + label::before, #checklist input[type="checkbox"]:checked + label::before {
+  .checklist input[type="radio"]:checked + label::before, .checklist input[type="checkbox"]:checked + label::before {
     background: var(--disabled);
     animation: slice 0.4s ease forwards;
   }
   
-  #checklist input[type="radio"]:checked + label::after, #checklist input[type="checkbox"]:checked + label::after {
+  .checklist input[type="radio"]:checked + label::after, .checklist input[type="checkbox"]:checked + label::after {
     animation: firework 0.5s ease forwards 0.1s;
   }
   
@@ -284,9 +294,339 @@ font-family: 'Times New Roman';
         margin-left: 10px !important;
         margin-right: 10px !important;
     }
+    .productlinkset h5
+    {
+      font-weight: 900 !important;
+      color: #000 !important;
+      background-color: #fff;
+    }
+    .confirm-text
+    {
+      display: none !important;
+    }
+    .prints
+    {
+      color: #000;
+      font-weight: 600;
+      background-color: #fff;
+    }
+    .product-table
+    {
+      zoom: 0.8 !important;
+    }
+    .product-lists
+    {
+      box-shadow: none !important;
+      margin: 10px !important;
+      padding: 0px !important;
+    }
+    .printHeader
+    {
+      display: block !important;
+    }
+    .productimgs
+    {
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+      zoom: 0.7 !important;
+    }
    @page{
     max-width: 100px;
     height: auto;
    }
 }
 
+.multiSelect {
+  width: 100%;
+  position: relative;
+}
+
+.multiSelect *, .multiSelect *::before, .multiSelect *::after {
+  box-sizing: border-box;
+}
+
+.multiSelect_dropdown {
+  font-size: 14px;
+  min-height: 35px;
+  line-height: 35px;
+  border-radius: 4px;
+  box-shadow: none;
+  outline: none;
+  background-color: #fff;
+  color: #444f5b;
+  border: 1px solid #d9dbde;
+  font-weight: 400;
+  padding: 0.5px 13px;
+  margin: 0;
+  transition: .1s border-color ease-in-out;  
+  cursor: pointer;
+}
+
+.multiSelect_dropdown.-hasValue {
+  padding: 5px 30px 5px 5px;
+  cursor: default;
+}
+
+.multiSelect_dropdown.-open {
+  box-shadow: none;
+  outline: none;
+  padding: 4.5px 29.5px 4.5px 4.5px;
+  border: 1.5px solid #4A332D;
+}
+
+.multiSelect_arrow::before,
+.multiSelect_arrow::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 2px;
+  height: 8px;
+  border-radius: 20px;
+  border-bottom: 8px solid #99A3BA;
+  top: 40%;
+  transition: all .15s ease;
+}
+
+.multiSelect_arrow::before {
+  right: 18px;
+  -webkit-transform: rotate(-50deg);
+  transform: rotate(-50deg);
+}
+
+.multiSelect_arrow::after {
+  right: 13px;
+  -webkit-transform: rotate(50deg);
+  transform: rotate(50deg);
+}
+
+.multiSelect_list {
+  margin: 0;
+  margin-bottom: 25px;
+  padding: 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  max-height: calc(10 * 31px);
+  top: 28px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 4px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  transition: opacity 0.1s ease, visibility 0.1s ease, -webkit-transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+  transition: opacity 0.1s ease, visibility 0.1s ease, transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+  transition: opacity 0.1s ease, visibility 0.1s ease, transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32), -webkit-transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+  -webkit-transform: scale(0.8) translate(0, 4px);
+  transform: scale(0.8) translate(0, 4px);
+  border: 1px solid #d9dbde;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.12);
+  z-index: 9999 !important;
+}
+.multiSelect_option {
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  -webkit-transform: translate(6px, 0);
+  transform: translate(6px, 0);
+  transition: all .15s ease;
+}
+
+.multiSelect_option.-selected {
+  display: none;
+}
+
+.multiSelect_option:hover .multiSelect_text {
+  color: #fff;
+  background: #ceb2a9;
+}
+
+.multiSelect_text {
+  cursor: pointer;
+  display: block;
+  padding: 5px 13px;
+  color: #525c67;
+  font-size: 14px;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  transition: all .15s ease;
+}
+
+.multiSelect_list.-open {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: scale(1) translate(0, 12px);
+  transform: scale(1) translate(0, 12px);
+  transition: opacity 0.15s ease, visibility 0.15s ease, -webkit-transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+  transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+  transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32), -webkit-transform 0.15s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+}
+
+.multiSelect_list.-open + .multiSelect_arrow::before {
+  -webkit-transform: rotate(-130deg);
+  transform: rotate(-130deg);
+}
+
+.multiSelect_list.-open + .multiSelect_arrow::after {
+  -webkit-transform: rotate(130deg);
+  transform: rotate(130deg);
+}
+
+.multiSelect_list.-open .multiSelect_option {
+  opacity: 1;
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(1) {
+transition-delay: 10ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(2) {
+transition-delay: 20ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(3) {
+transition-delay: 30ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(4) {
+transition-delay: 40ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(5) {
+transition-delay: 50ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(6) {
+transition-delay: 60ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(7) {
+transition-delay: 70ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(8) {
+transition-delay: 80ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(9) {
+transition-delay: 90ms;
+}
+
+.multiSelect_list.-open .multiSelect_option:nth-child(10) {
+transition-delay: 100ms;
+}
+
+.multiSelect_choice {
+  background: rgba(77, 132, 254, 0.1);
+  color: #444f5b;
+  padding: 4px 8px;
+  line-height: 17px;
+  margin: 5px;
+  display: inline-block;
+  font-size: 13px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.multiSelect_deselect {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  stroke: #b2bac3;
+  stroke-width: 4px;
+  margin-top: -1px;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+.multiSelect_choice:hover .multiSelect_deselect {
+  stroke: #a1a8b1;
+}
+
+.multiSelect_noselections {
+  text-align: center;
+  padding: 7px;
+  color: #b2bac3;
+  font-weight: 450;
+  margin: 0;
+}
+
+.multiSelect_placeholder {
+  position: absolute;
+  left: 20px;
+  font-size: 14px;
+  top: 8px;
+  padding: 0 4px;
+  background-color: #fff;
+  color: #b8bcbf;
+  pointer-events: none;
+  transition: all .1s ease;
+}
+
+.multiSelect_dropdown.-open + .multiSelect_placeholder,
+.multiSelect_dropdown.-open.-hasValue + .multiSelect_placeholder {
+  top: -11px;
+  left: 17px;
+  color: #4073FF;
+  font-size: 13px;
+}
+
+.multiSelect_dropdown.-hasValue + .multiSelect_placeholder {
+  top: -11px;
+  left: 17px;
+  color: #6e7277;
+  font-size: 13px;
+}
+.modalz {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: visible;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+  z-index: 999 !important;
+}
+.modalz-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 2rem 2.5rem;
+  width: 30em;
+  border-radius: 0.5rem;
+  z-index: 999 !important;
+}
+.close-button {
+  float: right;
+  width: 1.5rem;
+  font-size: 1.2em;
+  line-height: 1;
+  padding: 0 .2em .15em;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: var(--clr-neutral);
+  color: var(--clr-dark);
+  transition: color 0.12s ease-in-out;
+}
+.close-button:hover {
+  color: var(--clr-main);
+}
+.show-modalz {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}

@@ -9,9 +9,8 @@
         content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
     <meta name="author" content="POS - BigBrew">
     <meta name="robots" content="noindex, nofollow">
-    <title>POS - BigBrew</title>
-
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/bigbrewImage/brew3.png">
+    <title>POS | BigBrew</title>
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
@@ -26,7 +25,7 @@
 
     <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-
+    
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/checkbox.css">
 </head>
@@ -107,28 +106,25 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="totalitem">
-                                    <h4 class="h4Items">Total items : 0</h4>
+                                    <h4>Total items : <span  class="h4Items">0</span></h4>
                                     <a href="#" onclick="clearCart()">Clear all</a>
                                 </div>
-                                <div class="product-table">
+                                <div class="printing">
+                                    <div class="printHeader" style="display: none;">
+                                        <img src="assets/bigbrewImage/brew3.png" alt="">
+                                        <p class="centered">BigBrew</p>
+                                        <p class="centered">Thanks for your purchase!
+                                        <br>www.sampleUrl.com</p>
+                                    </div>
+                                    <div class="product-table">
                                     
+                                    </div>
                                 </div>
                             </div>
                             <div class="split-card">
                             </div>
                             <div class="card-body pt-0">
                                 <div class="setvalue">
-                                    <!-- <ul>
-                                        <li>
-                                            <h5>Subtotal </h5>
-                                            <h6>55.00$</h6>
-                                        </li>
-                                        <li>
-                                            <h5>Tax </h5>
-                                            <h6>5.00$</h6>
-                                        </li>
-                                        
-                                    </ul> -->
                                 </div>
                                
                                 <div class="btn-totallabel" id="cashPupop">
@@ -167,26 +163,26 @@
                                 </div>
                                 
                                 <div id="printableDiv" style="display: none;">
-                                        <p class="centered">BigBrew
-                                            <p class="centered">Thanks for your purchase!
-                                                <br>www.sampleUrl.com</p>
-                                            <table class="table">
-                                                <thead class="thead">
-                                                    <tr class="tr">
-                                                        <th class=" quantityx thx">Q.</th>
-                                                        <th class=" descriptionx thx">Description</th>
-                                                        <th class=" pricex thx">Price</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="printBody">
-                                                  
-                                                    
-                                                </tbody>
-                                            </table>
-                                            
-                                            <div id="totalCashChange">
+                                    <p class="centered">BigBrew
+                                        <p class="centered">Thanks for your purchase!
+                                            <br>www.sampleUrl.com</p>
+                                        <table class="table">
+                                            <thead class="thead">
+                                                <tr class="tr">
+                                                    <th class=" descriptionx thx">Prod</th>
+                                                    <th class=" quantityx thx">qty</th>
+                                                    <th class=" pricex thx">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="printBody">
+                                                
+                                                
+                                            </tbody>
+                                        </table>
+                                        
+                                        <div id="totalCashChange">
 
-                                            </div>
+                                        </div>
                                             
                                 </div>
                             </div>
@@ -974,6 +970,9 @@
     <script src="/js/func.js"></script>
     <script type="module" src="js/getAllCategory.js"></script>
     <script type="module" src="js/categorySelect.js"></script>
+    <script>
+
+    </script>
 </body>
 
 </html>
