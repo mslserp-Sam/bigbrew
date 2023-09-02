@@ -30,15 +30,29 @@ $('input[name="4digits"]').keypress
 $('#addNewUserForm').on('submit', function(){
   var fullName = $('#add-user-fullname').val();
   var pinPass = $('#add-user-pin').val();
-    push(child(dbref, `Pos_Accounts`),{
-        FullName:fullName,
-        Pin:pinPass
+  var ifExsisting = [];
+    get(child(dbref, `Pos_Accounts`)).then((snapchat)=>{
+      snapchat.forEach(data =>{
+        ifExsisting.push(data.val().Pin)
+      })
     }).then(()=>{
-        $('#successHeader').show();
-        $('.datatables-users').DataTable().destroy();
-        $('#dataTable tbody').empty();
-        getDataAll()
+      var ifMeron = ifExsisting.includes(pinPass);
+      if(ifMeron == true){
+        $('#errorPin').html(`${pinPass} Pin is already existing`);
+      }else{
+        push(child(dbref, `Pos_Accounts`),{
+            FullName:fullName,
+            Pin:pinPass
+        }).then(()=>{
+            $('#successHeader').show();
+            $('.datatables-users').DataTable().destroy();
+            $('#dataTable tbody').empty();
+            $('#errorPin').html("");
+            getDataAll()
+        })
+      }
     })
+   
 })
 $('#editPosAccount').on('submit', ()=>{
     var fullName = $('#modal-FullName').val();
