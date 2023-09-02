@@ -21,6 +21,7 @@ function generateSerial() {
         
     }
     $('#transacId').html(randomSerial);
+    $('#transac').html(randomSerial);
 }
 localStorage.removeItem('prod');
 get(child(dbref, `Product_Category`)).then((snapchat)=>{
@@ -287,7 +288,6 @@ function allProducts(key)
                                             ₱ ${parseFloat(totalAm)}
                                         </label>
                                     </div>
-                                    <p class="centered" style="font-size: 15px;">Payment Receipt</p>
                                     <div class="divMargins">
                                         <label >
                                             Cash
@@ -450,7 +450,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             `)
             $('#printBody').append(`
                 <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-                    <td>
+                    <td style="width: 50%">
                         <h4 class="printProd">${getName}</h4>
                         <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
                     </td>
@@ -528,7 +528,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         
         $('#printBody').append(`
             <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-                <td style="width:">
+                <td style="width: 50%">
                     <h4 class="printProd">${getName}</h4>
                     <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
                 </td>
