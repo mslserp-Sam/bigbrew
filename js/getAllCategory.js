@@ -12,7 +12,15 @@ const theMonth = date.getMonth();
 const theDate = date.getDate();
 const theDay = date.getDay();
 $('#transacDate').text(`${days[theDay]}, ${months[theMonth]} ${theDate},  ${theYear}`)
-$('#cashierName').text(localStorage.getItem('cashier'));
+
+get(child(dbref, `Pos_Accounts`)).then((snapchat)=>{
+    snapchat.forEach(element => {       
+      if(element.val().pin == localStorage.getItem('cashier'))
+      {
+        $('#cashierName').text(element.val().FullName);
+      }
+    });
+  })
 generateSerial()
 function generateSerial() {
     'use strict';

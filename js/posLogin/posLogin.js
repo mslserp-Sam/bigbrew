@@ -80,6 +80,7 @@ $(document).ready(function()
 
           if (pinParse.includes(enterCode)) {
             // Right PIN!
+            localStorage.setItem('cashier',enterCode)
             $("#fields .numberfield").addClass("right");
             $("#numbers").addClass("hide");
             $("#anleitung").html("<strong>Welcome<strong>");
