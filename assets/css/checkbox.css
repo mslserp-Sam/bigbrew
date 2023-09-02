@@ -326,7 +326,7 @@ font-family: 'Times New Roman';
     }
     .productimgs
     {
-      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      -webkit-filter: grayscale(100%);
       filter: grayscale(100%);
       zoom: 0.7 !important;
     }

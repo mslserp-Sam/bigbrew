@@ -119,7 +119,8 @@
                                 <div class="setvalue">
                                 </div>
                                
-                                <div class="btn-totallabel" id="cashPupop">
+                                <div class="btn-totallabel" id="cashPupop" data-bs-toggle="modal"
+                                data-bs-target="#smallModal">
                                     <div style="display: flex;">
                                         <a href="javascript:void(0);" class="paymentmethod">
                                             <img src="assets/img/icons/cash.svg" alt="img" class="me-2">
@@ -128,6 +129,43 @@
                                     </div>
                                     <h6 class="totalCash">0</h6>
                                 </div>
+
+                                <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel2">Cash Amount</h5>
+                                          <button
+                                            type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="row">
+                                            <div class="col mb-3">
+                                                <div id="errorHandlerCash" class="alert alert-danger alert-dismissible" role="alert">
+                                                    Insufficient cash amount
+                                                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                              <!-- <label for="nameSmall" class="form-label">Cash Amount </label> -->
+                                              <input type="text" id="insertedCashAmount" class="form-control" placeholder="Enter Cash Amount" />
+                                            </div>
+                                          </div>
+                                          
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="d-flex">
+                                                  <button type="button" class="btn btn-primary" id="proceedClick">Proceed</button>
+                                                  <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal" id="closeModal">
+                                                    Close
+                                                  </button>
+                                            </div>
+                                          
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 <div class="btn-pos">
                                     <ul>
                                         <li>
@@ -154,16 +192,28 @@
                                     </ul>
                                 </div>
                                 
-                                <div id="printableDiv" style="display: none;">
-                                    <p class="centered">BigBrew
-                                        <p class="centered">Thanks for your purchase!
+                                <div id="printableDiv" style="font-size: 12px; font-family: 'Times New Roman';">
+                                    <p class="centered" style="text-align: center; align-content: center;">BigBrew
+                                        <p class="centered" style="text-align: center; align-content: center;">Thanks for your purchase!
                                             <br>www.sampleUrl.com</p>
-                                        <table class="table">
+                                        <!-- <table class="table">
                                             <thead class="thead">
                                                 <tr class="tr">
-                                                    <th class=" descriptionx thx">Prod</th>
-                                                    <th class=" quantityx thx">qty</th>
-                                                    <th class=" pricex thx">Price</th>
+                                                    <th>Prod</th>
+                                                    <th>qty</th>
+                                                    <th>Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="printBody">
+                                                                                                
+                                            </tbody>
+                                        </table> -->
+                                        <table style="border-collapse: collapse !important; border-top: 1px dashed black !important; ">
+                                            <thead>
+                                                <tr>
+                                                    <th style=" text-align: start !important;">Prod</th>
+                                                    <th style=" padding: 10px !important; text-align: start !important;">qty</th>
+                                                    <th style=" padding: 10px !important; text-align: start !important;">Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="printBody">
@@ -171,7 +221,7 @@
                                             </tbody>
                                         </table>
                                         
-                                        <div id="totalCashChange">
+                                        <div id="totalCashChange" style="border-collapse: collapse !important; border-top: 1px dashed black !important; padding-top: 5px !important">
 
                                         </div>
                                         <div class="w-100 d-flex justify-content-center">
