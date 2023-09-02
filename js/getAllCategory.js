@@ -218,7 +218,25 @@ function allProducts(key)
                             fullData.splice(indexz, 1);
                             localStorage.setItem('prod',JSON.stringify(fullData))               
                             $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove`).remove();
-
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print`).remove();
+                            tempPrice = parseInt(tempPrice) - parseInt(getTotalPrice);
+                            $('.totalCash').html(tempPrice);
+                            h4Items = parseInt(h4Items) - parseInt(getQuantity);
+                            $('.h4Items').text(h4Items);
+                        }
+                    })
+                    $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtnAdds`).on('click',(e)=>{
+                        var checker2 = localStorage.getItem("prod");
+                        console.log(checker2)
+                        var fullData = JSON.parse(checker2);
+                        const indexz = fullData.indexOf(btoa(getName)+'Adds'); 
+                        if(indexz > -1) 
+                        {
+                            var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
+                            fullData.splice(indexz, 1);
+                            localStorage.setItem('prod',JSON.stringify(fullData))               
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removeAdds`).remove();
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}printAdds`).remove();
                             tempPrice = parseInt(tempPrice) - parseInt(getTotalPrice);
                             $('.totalCash').html(tempPrice);
                             h4Items = parseInt(h4Items) - parseInt(getQuantity);
@@ -260,33 +278,32 @@ function allProducts(key)
                                 var cashAm = $('#insertedCashAmount').val();
                                 var totalAm = totalCASH;
                                 var changeAm = cashAm - totalAm;
-                                $('#totalCashChange').append(`
-                            
-                                <div class="m-2 divDashed">
-                                    <label class="totalLabel">
-                                        Total
-                                    </label>
-                                    <label class="totalLabel" style="float: right;">
-                                        ${totalAm}
-                                    </label>
-                                </div>
-                                <p class="centered" style="font-size: 15px;">Payment Receipt</p>
-                                <div class="divMargins">
-                                    <label >
-                                        Cash
-                                    </label>
-                                    <label style="float: right;">
-                                        ${cashAm}
-                                    </label>
-                                </div>
-                                <div class="m-2">
-                                    <label >
-                                        Change
-                                    </label>
-                                    <label style="float: right;">
-                                        ${changeAm}
-                                    </label>
-                                </div>
+                                $('#totalCashChange').append(`                            
+                                    <div class="m-2 divDashed">
+                                        <label class="totalLabel">
+                                            Total
+                                        </label>
+                                        <label class="totalLabel" style="float: right;">
+                                            ₱ ${parseFloat(totalAm)}
+                                        </label>
+                                    </div>
+                                    <p class="centered" style="font-size: 15px;">Payment Receipt</p>
+                                    <div class="divMargins">
+                                        <label >
+                                            Cash
+                                        </label>
+                                        <label style="float: right;">
+                                            ₱ ${parseFloat(cashAm)}
+                                        </label>
+                                    </div>
+                                    <div class="m-2">
+                                        <label >
+                                            Change
+                                        </label>
+                                        <label style="float: right;">
+                                            ₱ ${parseFloat(changeAm)}
+                                        </label>
+                                    </div>
                                 `)
                                 var printableDiv = document.getElementById('printableDiv').innerHTML;
                                 var originalContent = document.body.innerHTML;
@@ -361,8 +378,13 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         if(ans && addOnsArr.length == 0)
         {
             var qtys = $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty').text(), prc = $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'price').text();
-            console.log(getQuantity,qtys);
-            console.log(getTotalPrice,prc)
+
+            var printDataQty   = $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'print td .printQty').text();
+            var printDataTotal = $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'print td .printTotal').text();
+
+            printDataQty   = parseInt(printDataQty) + getQuantity;
+            printDataTotal = parseInt(printDataTotal) + getTotalPrice;
+
             getQuantity = getQuantity + parseInt(qtys);
             getTotalPrice = getTotalPrice + parseInt(prc);
             $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty').text(getQuantity);
@@ -372,7 +394,10 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             tempPrice = parseInt(tempPrice) + parseInt(getTotalPrice);
             $('.totalCash').html(tempPrice);
             h4Items = parseInt(h4Items) + parseInt(getQuantity);
-            $('.h4Items').tex(h4Items);
+            $('.h4Items').text(h4Items);
+
+            $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'print td .printQty').text(printDataQty)
+            $('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'print td .printTotal').text(parseFloat(printDataTotal));
         }
         else
         {
@@ -388,12 +413,12 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                     `;
                 })
             }
-            fullData.push(`${btoa(getName)}`);
+            fullData.push(`${btoa(getName)}${addOnsTotal != 0  ? 'Adds' : ''}`);
             console.log(fullData)
             localStorage.setItem("prod",JSON.stringify(fullData));
             var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
             $('.product-table').append(`
-                    <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove">
+                    <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove${addOnsTotal != 0  ? 'Adds' : ''}">
                         <li>
                             <div class="productimg">
                                 <div class="productimgs">
@@ -416,18 +441,25 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                         </li>
                         <li></li>
                         <li>
-                            <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn">
+                            <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn${addOnsTotal != 0  ? 'Adds' : ''}">
                                 <img src="assets/img/icons/delete-2.svg" alt="img">                                            
                             </a>
                         </li>
                         
                     </ul>
             `)
-            $('.printBody').append(`
-                <tr>
+            $('#printBody').append(`
+                <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
                     <td>
-                        <h4>${getName}<h4>
+                        <h4 class="printProd">${getName}</h4>
+                        <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
+                    </td>
                     <td>
+                        <h4 class="printQty">${getQuantity}</h4>
+                    </td>
+                    <td style="float: right;">
+                        <h4 class="printTotal">${getTotalPrice + parseInt(addOnsTotal)}</h4>
+                    </td>
                 </tr>
             `);
             var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
@@ -458,7 +490,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         }
         
         $('.product-table').append(`
-            <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove">
+            <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove${addOnsTotal != 0  ? 'Adds' : ''}">
                 <li>
                     <div class="productimg">
                         <div class="productimgs">
@@ -481,7 +513,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                 </li>
                 <li></li>
                 <li>
-                    <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn">
+                    <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn${addOnsTotal != 0  ? 'Adds' : ''}">
                         <img src="assets/img/icons/delete-2.svg" alt="img">                                            
                     </a>
                 </li>
@@ -493,5 +525,20 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         $('.totalCash').html(tempPrice);
         h4Items = parseInt(h4Items) + parseInt(getQuantity);
         $('.h4Items').text(h4Items);
+        
+        $('#printBody').append(`
+            <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
+                <td style="width:">
+                    <h4 class="printProd">${getName}</h4>
+                    <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
+                </td>
+                <td>
+                    <h4 class="printQty">${getQuantity}</h4>
+                </td>
+                <td style="float: right;">
+                    <h4 class="printTotal">${getTotalPrice + parseInt(addOnsTotal)}</h4>    
+                </td>
+            </tr>
+        `);
     }
 }
