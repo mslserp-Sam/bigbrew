@@ -102,11 +102,11 @@ $(document).ready(function()
                   showLoaderOnConfirm: true,
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    console.log(result.value)
+                    var trans = generateSerial();
+                    localStorage.setItem('trans',trans)
                     location.replace('pos.html')
-                    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1`), {
-                      Cash_onhand: result.value,
-                      transactionID: generateSerial()
+                    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+trans), {
+                      Cash_onhand: result.value
                     })
                   }
                   else{

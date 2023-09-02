@@ -294,7 +294,7 @@ font-family: 'Times New Roman';
         margin-left: 10px !important;
         margin-right: 10px !important;
     }
-    .productlinkset h5
+    h4
     {
       font-weight: 900 !important;
       color: #000 !important;
@@ -329,6 +329,15 @@ font-family: 'Times New Roman';
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
       zoom: 0.7 !important;
+    }
+    .haft
+    {
+      zoom: 0.8;
+    }
+    .transac
+    {
+      font-size: 12px !important;
+      font-family: 400 !important;
     }
    @page{
     max-width: 100px;

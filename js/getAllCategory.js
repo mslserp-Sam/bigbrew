@@ -450,7 +450,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             `)
             $('#printBody').append(`
                 <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-                    <td style="width: 50%">
+                    <td class="haft">
                         <h4 class="printProd">${getName}</h4>
                         <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
                     </td>
@@ -528,7 +528,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         
         $('#printBody').append(`
             <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
-                <td style="width: 50%">
+                <td class="haft">
                     <h4 class="printProd">${getName}</h4>
                     <h4 class="printAdds">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
                 </td>
@@ -541,4 +541,19 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             </tr>
         `);
     }
+}
+function transactions(prodName, qty, price, totalPrice)
+{
+    const date = new Date();
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  
+    const theYear = date.getFullYear();
+    const theMonth = date.getMonth();
+    const theDate = date.getDate();
+    const theDay = date.getDay();
+    var tans = localStorage.getItem('tran');
+    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+tans), {
+        Cash_onhand: result.value
+    })
 }
