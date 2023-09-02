@@ -17,3 +17,4 @@ if ($this.hasClass("active")) {
     ).addClass("active");
 }
 });
+
