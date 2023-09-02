@@ -23,7 +23,11 @@ const auth = getAuth();
             }
         });
       // http://www.jsfuck.com/
-      
+//       signOut(auth).then(() => {
+//     // Sign-out successful.
+//   }).catch((error) => {
+//     // An error happened.
+//   });
       enterCode.toString();
       $('#anleitung').html("");
       $("#numbers button").click(function() {
