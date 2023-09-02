@@ -28,6 +28,7 @@
     
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/checkbox.css">
+    <link href="https://fonts.cdnfonts.com/css/techno-lcd" rel="stylesheet">                
 </head>
 
 <body>
@@ -131,7 +132,7 @@
                                 </div>
 
                                 <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
                                           <h5 class="modal-title" id="exampleModalLabel2">Cash Amount</h5>
@@ -192,28 +193,24 @@
                                     </ul>
                                 </div>
                                 
-                                <div id="printableDiv" style="font-size: 12px; font-family: 'Times New Roman';display: none;">
-                                    <p class="centered" style="text-align: center; align-content: center;">BigBrew
-                                        <p class="centered" style="text-align: center; align-content: center;">Thanks for your purchase!
-                                            <br>www.sampleUrl.com</p>
-                                        <!-- <table class="table">
-                                            <thead class="thead">
+                                <div id="printableDiv" style="font-size: 12px; display: none;">
+                                    <div class="centered" style="text-align: center; align-content: center; font-weight: 900 !important; margin-top: 30px; font-size: 18px; font-family: 'Techno LCD', sans-serif;">BigBrew</div>
+                                    <div class="centered" style="text-align: center; align-content: center; font-weight: 900 !important; font-size: 12px; font-family: 'Techno LCD', sans-serif;"><span id="transacDate"></span></div>
+                                        
+                                        <table style="margin: 0px !important;"><br>
+                                            <tr class="tr" style="font-weight: 900; font-size: 11px; font-family: 'Techno LCD', sans-serif;">
+                                                <td>Order No : #<span id="transac"></span></td>
+                                            </tr>
+                                            <tr class="tr" style="font-weight: 900; font-size: 11px; font-family: 'Techno LCD', sans-serif;">
+                                                <td>Cashier :<span id="cashierName"></span></td>
+                                            </tr>
+                                        </table>                                 
+                                        <table class="tablex" style="border-collapse: collapse !important; border-top: 1px dashed black !important;">
+                                            <thead class="thead" style="border-bottom: 1px dashed black !important;">
                                                 <tr class="tr">
-                                                    <th>Prod</th>
-                                                    <th>qty</th>
-                                                    <th>Price</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="printBody">
-                                                                                                
-                                            </tbody>
-                                        </table> -->
-                                        <table class="tablex" style="border-collapse: collapse !important; border-top: 1px dashed black !important; ">
-                                            <thead class="thead">
-                                                <tr class="tr">
-                                                    <th style=" text-align: start !important;">Prod</th>
-                                                    <th style=" padding: 10px !important; text-align: start !important;">qty</th>
-                                                    <th style=" padding: 10px !important; text-align: start !important;">Price</th>
+                                                    <th style=" text-align: start !important; font-size: 13px;">Dsc</th>
+                                                    <th style=" padding: 10px !important; text-align: start !important; font-size: 13px;">Qty</th>
+                                                    <th style=" padding: 10px !important; text-align: start !important; font-size: 13px;">Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="printBody">
@@ -221,12 +218,13 @@
                                             </tbody>
                                         </table>
                                         
-                                        <div id="totalCashChange" style="border-collapse: collapse !important; border-top: 1px dashed black !important; padding-top: 5px !important">
+                                        <table style="border-collapse: collapse !important; border-top: 1px dashed black !important; padding-top: 5px !important">
+                                            <tbody id="totalCashChange">
 
-                                        </div>
-                                        <div class="w-100 d-flex justify-content-center">
-                                            <h6>Transaction id : #<span id="transac"></span></h6>
-                                        </div>
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                        <div class="centered" style="text-align: center; align-content: center; font-weight: 900 !important; font-size: 13px;">Thanks for your purchase!</div>
                                 </div>
                             </div>
                         </div>
