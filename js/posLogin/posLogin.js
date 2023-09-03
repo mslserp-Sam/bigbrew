@@ -34,8 +34,8 @@ $(document).ready(function()
 
   var pin = [], enterCode = "", uid = '';
   get(child(dbref, `Pos_Accounts`)).then((snapchat)=>{
-    snapchat.forEach(element => {          
-      pin.push(element.val().pin);
+    snapchat.forEach(element => {     
+      pin.push(element.val().Pin);
     });
   }).then(()=>{        
     localStorage.setItem('nip',JSON.stringify(pin));
@@ -103,11 +103,12 @@ $(document).ready(function()
                   showLoaderOnConfirm: true,
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    console.log(result.value)
+                    var trans = generateSerial();
+                    localStorage.setItem('trans',trans)
+                    localStorage.setItem('cash',result.value)
                     location.replace('pos.html')
-                    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1`), {
-                      Cash_onhand: result.value,
-                      transactionID: generateSerial()
+                    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+result.value+'/'+trans), {
+                      transac: 'test'
                     })
                   }
                   else{

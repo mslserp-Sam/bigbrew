@@ -1,4 +1,4 @@
-import { get, getDatabase, ref, set, child, update, remove, push} from "https://www.gstatic.com/firebasejs/10.2.0/firebase-database.js";
+import { get, getDatabase, ref, set, child, update, remove } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-database.js";
 import { signInWithEmailAndPassword, getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 const db = getDatabase();
 const dbref = ref(db);
@@ -229,11 +229,9 @@ function allProducts(key)
                     
                     $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn`).on('click',(e)=>{
                         var checker2 = localStorage.getItem("prod");
+                        console.log(checker2)
                         var fullData = JSON.parse(checker2);
-                        const indexz = fullData.indexOf(btoa(getName).replace(/[^a-zA-Z ]/g, "")); 
-
-                        console.log(checker2,indexz);
-
+                        const indexz = fullData.indexOf(btoa(getName)); 
                         if(indexz > -1) 
                         {
                             var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
@@ -247,19 +245,18 @@ function allProducts(key)
                             $('.h4Items').text(h4Items);
                         }
                     })
-                    $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtnAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).on('click',(e)=>{
+                    $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtnAdds`).on('click',(e)=>{
                         var checker2 = localStorage.getItem("prod");
-                        
+                        console.log(checker2)
                         var fullData = JSON.parse(checker2);
-                        const indexz = fullData.indexOf(btoa(getName).replace(/[^a-zA-Z ]/g, "")+'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")); 
-                        console.log(addOnsArr,getName,fullData,btoa(getName).replace(/[^a-zA-Z ]/g, "")+'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, ""))
+                        const indexz = fullData.indexOf(btoa(getName)+'Adds'); 
                         if(indexz > -1) 
                         {
                             var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
                             fullData.splice(indexz, 1);
-                            localStorage.setItem('prod',JSON.stringify(fullData))
-                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removeAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
-                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}printAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
+                            localStorage.setItem('prod',JSON.stringify(fullData))               
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removeAdds`).remove();
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}printAdds`).remove();
                             tempPrice = parseInt(tempPrice) - parseInt(getTotalPrice);
                             $('.totalCash').html(tempPrice);
                             h4Items = parseInt(h4Items) - parseInt(getQuantity);
@@ -374,14 +371,13 @@ function allProducts(key)
 }
 
 allProducts('wala');
-
 function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addOnsArr)
 {
     var arrSell = [];
     arrSell.push(JSON.parse(localStorage.getItem('arrSell')));
     console.log(arrSell)
     var checker = localStorage.getItem("prod");
-    var prods=[];
+    var prods='';
     if(checker)
     {
         var fullData = JSON.parse(checker);
@@ -427,12 +423,12 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                     addsOnArr.push(element);
                 })
             }
-            fullData.push(`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}${addOnsTotal != 0  ? 'Adds'+btoa(addsOnArr).replace(/[^a-zA-Z ]/g, "") : ''}`);
+            fullData.push(`${btoa(getName)}${addOnsTotal != 0  ? 'Adds' : ''}`);
             console.log(fullData)
             localStorage.setItem("prod",JSON.stringify(fullData));
             var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
             $('.product-table').append(`
-                    <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove${addOnsTotal != 0  ? 'Adds'+btoa(addsOnArr).replace(/[^a-zA-Z ]/g, "") : ''}">
+                    <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove${addOnsTotal != 0  ? 'Adds' : ''}">
                         <li>
                             <div class="productimg">
                                 <div class="productimgs">
@@ -455,7 +451,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                         </li>
                         <li></li>
                         <li>
-                            <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn${addOnsTotal != 0  ? 'Adds'+btoa(addsOnArr).replace(/[^a-zA-Z ]/g, "") : ''}">
+                            <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn${addOnsTotal != 0  ? 'Adds' : ''}">
                                 <img src="assets/img/icons/delete-2.svg" alt="img">                                            
                             </a>
                         </li>
@@ -496,6 +492,11 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
     }
     else
     {
+        prods = `["${btoa(getName)}"]`;
+        var checker = localStorage.setItem("prod",prods);                         
+    
+        var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
+        
         var dataArr = '';
         var addsOnArr = [];
         if(addOnsTotal != 0)
@@ -510,15 +511,9 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                 addsOnArr.push(element);
             })
         }
-        prods.push(`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}${addOnsTotal != 0  ? 'Adds'+btoa(addsOnArr).replace(/[^a-zA-Z ]/g, "") : ''}`);
-
-        console.log(prods,' tite',addsOnArr)
-        var checker = localStorage.setItem("prod",JSON.stringify(prods));                         
-    
-        var prcID = btoa(getName).replace(/[^a-zA-Z ]/g, ""), qtyID = btoa(getName).replace(/[^a-zA-Z ]/g, "");
         
         $('.product-table').append(`
-            <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove${addOnsTotal != 0  ? 'Adds'+btoa(addsOnArr).replace(/[^a-zA-Z ]/g, "") : ''}">
+            <ul class="product-lists" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove${addOnsTotal != 0  ? 'Adds' : ''}">
                 <li>
                     <div class="productimg">
                         <div class="productimgs">
@@ -541,7 +536,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                 </li>
                 <li></li>
                 <li>
-                    <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn${addOnsTotal != 0  ? 'Adds'+btoa(addsOnArr).replace(/[^a-zA-Z ]/g, "") : ''}">
+                    <a class="confirm-text" id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtn${addOnsTotal != 0  ? 'Adds' : ''}">
                         <img src="assets/img/icons/delete-2.svg" alt="img">                                            
                     </a>
                 </li>
