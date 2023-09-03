@@ -241,7 +241,7 @@ function allProducts(key)
                             localStorage.setItem('prod',JSON.stringify(fullData))               
                             $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove`).remove();
                             $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print`).remove();
-                            tempPrice = parseInt(tempPrice) - parseInt(getTotalPrice);
+                            tempPrice = (parseInt(tempPrice) - parseInt(getTotalPrice)) - parseInt(addOnsTotal);;
                             $('.totalCash').html(tempPrice);
                             h4Items = parseInt(h4Items) - parseInt(getQuantity);
                             $('.h4Items').text(h4Items);
@@ -260,7 +260,7 @@ function allProducts(key)
                             localStorage.setItem('prod',JSON.stringify(fullData))
                             $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removeAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
                             $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}printAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
-                            tempPrice = parseInt(tempPrice) - parseInt(getTotalPrice);
+                            tempPrice = (parseInt(tempPrice) - parseInt(getTotalPrice)) - parseInt(addOnsTotal);
                             $('.totalCash').html(tempPrice);
                             h4Items = parseInt(h4Items) - parseInt(getQuantity);
                             $('.h4Items').text(h4Items);
@@ -385,7 +385,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
     if(checker)
     {
         var fullData = JSON.parse(checker);
-        var ans = fullData.includes(btoa(getName));   
+        var ans = fullData.includes(btoa(getName).replace(/[^a-zA-Z ]/g, ""));   
 
         if(ans && addOnsArr.length == 0)
         {
@@ -474,7 +474,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             
             localStorage.setItem('arrSell',JSON.stringify(arrSell));
             $('#printBody').append(`
-                <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
+                <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "") : ''}">
                     <td style="border: 1px solid #fff;">
                         <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
                         <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
@@ -488,7 +488,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                 </tr>
             `);
             var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
-            tempPrice = parseInt(tempPrice) + parseInt(getTotalPrice);
+            tempPrice = parseInt(tempPrice) + parseInt(getTotalPrice) + parseInt(addOnsTotal);
             $('.totalCash').html(tempPrice);
             h4Items = parseInt(h4Items) + parseInt(getQuantity);
             $('.h4Items').text(h4Items);
@@ -549,7 +549,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             </ul>
         `);
         var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
-        tempPrice = parseInt(tempPrice) + parseInt(getTotalPrice);
+        tempPrice = parseInt(tempPrice) + parseInt(getTotalPrice) + parseInt(addOnsTotal);
         $('.totalCash').html(tempPrice);
         h4Items = parseInt(h4Items) + parseInt(getQuantity);
         $('.h4Items').text(h4Items);
@@ -568,7 +568,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
 
 
         $('#printBody').append(`
-            <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds' : ''}">
+            <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "") : ''}">
                 <td style="border: 1px solid #fff;">
                     <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
                     <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
