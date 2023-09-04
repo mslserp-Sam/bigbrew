@@ -3,7 +3,12 @@ import { signInWithEmailAndPassword, getAuth, signOut, onAuthStateChanged } from
 const db = getDatabase();
 const dbref = ref(db);
 const auth = getAuth();
-
+// signOut(auth).then(() => {
+//     // Sign-out successful.
+//   }).catch((error) => {
+//     // An error happened.
+//   });
+  
 onAuthStateChanged(auth, (user) => {
     if (user) {
       $('#errorLabel').hide()
@@ -14,7 +19,7 @@ onAuthStateChanged(auth, (user) => {
             if(snapchat.val().userType == 2){
                 location.replace("../posLogin.html")
             }else{
-                location.replace("../posLogin.html")
+                location.replace("../admin/adminDashboard/dashboard.html")
             }
       })
  
@@ -22,14 +27,9 @@ onAuthStateChanged(auth, (user) => {
     
     }
   });
-// signOut(auth).then(() => {
-//     // Sign-out successful.
-//   }).catch((error) => {
-//     // An error happened.
-//   });
-  
+
 $('#loginClick').on('click', function(){
-    var username = $('#email').val() + '@gmail.com';
+    var username = $('#email').val() + '@bigbrew.com';
     var password = $('#password').val();
     signInWithEmailAndPassword(auth, username, password)
     .then((userCredential) => {
