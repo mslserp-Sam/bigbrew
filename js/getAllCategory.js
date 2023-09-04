@@ -11,7 +11,7 @@ const theYear = date.getFullYear();
 const theMonth = date.getMonth();
 const theDate = date.getDate();
 const theDay = date.getDay();
-
+localStorage.removeItem('arrSell');
 $('#transacDate').text(`${days[theDay]}, ${months[theMonth]} ${theDate},  ${theYear}`)
 
 get(child(dbref, `Pos_Accounts`)).then((snapchat)=>{
@@ -38,7 +38,7 @@ function generateSerial() {
         randomSerial += chars.substring(randomNumber, randomNumber + 1);
         
     }
-    $('#transacId').html(localStorage.getItem('trans'));
+    $('#transacId').html(randomSerial);
     $('#transac').html(randomSerial);
 }
 
@@ -271,61 +271,7 @@ function allProducts(key)
             })
            
             $('#errorHandlerCash').hide();
-            $('#proceedClick').on('click', ()=>{
-                var totalCASH = parseFloat($('.totalCash').html());
-                $('#totalCashChange').html("");
-                if(totalCASH != 0){
-                    if($('#insertedCashAmount').val() < totalCASH){
-                        $('#errorHandlerCash').show();
-                    }
-                    else{
-                        $('#closeModal').trigger('click');
-                        $('#errorHandlerCash').hide();
-                        var cashAm = $('#insertedCashAmount').val();
-                        var totalAm = totalCASH;
-                        var changeAm = cashAm - totalAm;
-                        $('#totalCashChange').append(`                            
-                                <tr class="m-2 divDashed" style="width: 100vw !important;">
-                                    <td style="font-size: 13px; width: 100vw !important;">
-                                        <label class="totalLabel">
-                                            Total
-                                        </label>
-                                        <label class="totalLabel" style="float: right;">
-                                            ₱ ${parseFloat(totalAm)}
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr class="divMargins" style="width: 100vw !important;">
-                                    <td style="font-size: 13px; width: 100vw !important;">
-                                        <label >
-                                            Cash
-                                        </label>
-                                        <label style="float: right;">
-                                            ₱ ${parseFloat(cashAm)}
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr class="m-2" style="width: 100vw !important;">
-                                    <td style="font-size: 13px; width: 100vw !important;">
-                                        <label >
-                                            Change
-                                        </label>
-                                        <label style="float: right;">
-                                            ₱ ${parseFloat(changeAm)}
-                                        </label>
-                                    </td>
-                                </tr>
-                            `)
-                        var printableDiv = document.getElementById('printableDiv').innerHTML;
-                        var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
-                        winPrint.document.write(`${printableDiv}`);
-                        winPrint.document.close();
-                        winPrint.focus();
-                        winPrint.print();
-                        winPrint.close(); 
-                    }
-                }
-            })
+            
            
             $('.size1').on('click', function(){
                 $('#grandeCb').val("1")
@@ -374,6 +320,64 @@ function allProducts(key)
 }
 
 allProducts('wala');
+$('#cashPupop').on('click', ()=>{        
+    transactions()
+})
+$('#proceedClick').on('click', ()=>{    
+    var totalCASH = parseFloat($('.totalCash').html());
+    $('#totalCashChange').html("");
+    if(totalCASH >= 0){
+        if($('#insertedCashAmount').val() < totalCASH){
+            $('#errorHandlerCash').show();
+        }
+        else{
+            $('#closeModal').trigger('click');
+            $('#errorHandlerCash').hide();
+            var cashAm = $('#insertedCashAmount').val();
+            var totalAm = totalCASH;
+            var changeAm = cashAm - totalAm;
+            $('#totalCashChange').append(`                            
+                    <tr class="m-2 divDashed" style="width: 100vw !important;">
+                        <td style="font-size: 13px; width: 100vw !important;">
+                            <label class="totalLabel">
+                                Total
+                            </label>
+                            <label class="totalLabel" style="float: right;">
+                                ₱ ${parseFloat(totalAm)}
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="divMargins" style="width: 100vw !important;">
+                        <td style="font-size: 13px; width: 100vw !important;">
+                            <label >
+                                Cash
+                            </label>
+                            <label style="float: right;">
+                                ₱ ${parseFloat(cashAm)}
+                            </label>
+                        </td>
+                    </tr>
+                    <tr class="m-2" style="width: 100vw !important;">
+                        <td style="font-size: 18px; width: 100vw !important;">
+                            <label >
+                                Change
+                            </label>
+                            <label style="float: right; font-size: 18px !important">
+                                ₱ ${parseFloat(changeAm)}
+                            </label>
+                        </td>
+                    </tr>
+                `)
+            var printableDiv = document.getElementById('printableDiv').innerHTML;
+            var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
+            winPrint.document.write(`${printableDiv}`);
+            winPrint.document.close();
+            winPrint.focus();
+            winPrint.print();
+            winPrint.close(); 
+        }
+    }
+})
 
 function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addOnsArr)
 {
@@ -421,7 +425,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                 addOnsArr.forEach((element)=>{
                     dataArr += `
                         <div style="margin: 0px !important">
-                            <small style="font-size: 12px; margin: 0px !important">${element}</small>
+                            <small class="adds-on-class" style="font-size: 12px; margin: 0px !important">${element}</small>
                         </div>
                     `;
                     addsOnArr.push(element);
@@ -470,14 +474,15 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                 "addonsPrice" : "${addOnsTotal != 0  ? addOnsTotal : 'No'}",
                 "addonsItem" : "${addOnsTotal != 0  ? addOnsArr : 'No'}"
             }`
-            arrSell.push(arrSellData);
-            
-            localStorage.setItem('arrSell',JSON.stringify(arrSell));
+            arrSell.push(JSON.parse(arrSellData));
+            console.log(arrSell)
+            localStorage.setItem('arrSell',JSON.stringify(JSON.parse(arrSellData)));
             $('#printBody').append(`
                 <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "") : ''}">
-                    <td style="border: 1px solid #fff;">
+                    <td>
                         <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
-                        <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
+                        <h4 class="printAdds" style="font-size: 11px !important; font-weight: 700;">${addOnsTotal != 0? dataArr:''}</h4>
+                        <input type="hidden" class="add-ons" value="${btoa(addsOnArr)}">
                     </td>
                     <td style="text-align: center !important; border: 1px solid #fff;">
                         <h4 class="printQty">${getQuantity}</h4>
@@ -504,7 +509,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             addOnsArr.forEach((element)=>{
                 dataArr += `
                     <div style="margin: 0px !important">
-                        <small style="font-size: 12px; margin: 0px !important">${element}</small>
+                        <small class="adds-on-class" style="font-size: 12px; margin: 0px !important">${element}</small>
                     </div>
                 `;
                 addsOnArr.push(element);
@@ -562,33 +567,53 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
             "addonsPrice" : "${addOnsTotal != 0  ? addOnsTotal : 'No'}",
             "addonsItem" : "${addOnsTotal != 0  ? addOnsArr : 'No'}"
         }`
-        arrSell.push(arrSellData);
-        
-        localStorage.setItem('arrSell',JSON.stringify(arrSell));
+        arrSell.push(JSON.parse(arrSellData));
+        console.log(arrSell)
+        localStorage.setItem('arrSell',JSON.stringify(JSON.parse(arrSellData)));
 
 
         $('#printBody').append(`
             <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "") : ''}">
-                <td style="border: 1px solid #fff;">
-                    <h4 class="printProd" style="font-size: 11px !important;">${getName}</h4>
-                    <h4 class="printAdds" style="font-size: 11px !important;">${addOnsTotal != 0? '(<i>add-ons</i>)':''}</h4>
+                <td>
+                    <h4 class="printProd" style="font-size: 11px !important; font-weight: 700;">${getName}</h4>
+                    <h4 class="printAdds" style="font-size: 9px !important; font-weight: 700;">${addOnsTotal != 0? dataArr :''}</h4>
+                    <input type="hidden" class="add-ons" value="${btoa(addsOnArr)}">
                 </td>
-                <td style="text-align: center !important; border: 1px solid #fff;">
+                <td style="text-align: center !important;">
                     <h4 class="printQty">${getQuantity}</h4>
                 </td>
-                <td style="text-align: center !important; border: 1px solid #fff;">
+                <td style="text-align: center !important;">
                     <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice + parseInt(addOnsTotal)}</h4>    
                 </td>
             </tr>
         `);
     }
 }
-function transactions(prodName, qty, price, totalPrice)
+function transactions()
 {  
-    var tans = localStorage.getItem('tran');
+    var gettable = $('#printBody tr');
+    var trans = $('#transacId').html();
     var cash = localStorage.getItem('cash');
+    var adds = $('#printBody').find('input').val();
 
-    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+cash+'/'+tans), {
-        transac : arr
+
+    for(var i = 0; i<gettable.length; i++)
+    {
+        var product      = document.getElementsByClassName('printProd')[i].innerHTML;
+        var productQty   = document.getElementsByClassName('printQty')[i].innerHTML;
+        var productTotal = document.getElementsByClassName('printTotal')[i].innerHTML;
+        var addons       = document.getElementsByClassName('add-ons')[i].value;
+        push(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+cash+'/'+trans+'/'), {
+            product     : product,
+            productAdds : addons ? JSON.stringify(atob(addons)) : 'No',
+            productQty  : productQty,
+            productTotal: productTotal
+        })
+        
+    }
+    var benta = 0;
+    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`), {
+        Sales: benta
     })
+
 }
