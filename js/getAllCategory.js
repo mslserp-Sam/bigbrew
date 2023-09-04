@@ -595,7 +595,7 @@ function transactions()
     var trans = $('#transacId').html();
     var cash = localStorage.getItem('cash');
     var adds = $('#printBody').find('input').val();
-
+    var totalCash = $('.totalCash').text();
 
     for(var i = 0; i<gettable.length; i++)
     {
@@ -611,9 +611,13 @@ function transactions()
         })
         
     }
-    var benta = 0;
-    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`), {
-        Sales: benta
+    var CurrentSale = 0;
+    get(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/${cash}`)).then((snapchat)=>{
+        CurrentSale = snapchat.val().Sales
+    }).then(()=>{
+        update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/${cash}`), {
+            Sales: parseInt(totalCash) + parseInt(CurrentSale)
+        })
     })
-
+    
 }

@@ -106,10 +106,13 @@ $(document).ready(function()
                     var trans = generateSerial();
                     localStorage.setItem('trans',trans)
                     localStorage.setItem('cash',result.value)
-                    location.replace('pos.html')
-                    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+result.value+'/'+trans), {
-                      transac: 'test'
+                    update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+result.value), {
+                      Sales: 0
+                    }).then(()=>{
+                      location.replace('pos.html')
                     })
+                    
+                    
                   }
                   else{
                     location.reload();                      
