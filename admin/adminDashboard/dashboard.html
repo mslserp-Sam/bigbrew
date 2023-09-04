@@ -674,7 +674,7 @@
                     <div class="card-header">
                       <div class="d-flex justify-content-between mb-3">
                         <h5 class="card-title mb-0">Statistics</h5>
-                        <small class="text-muted">Updated 1 month ago</small>
+                        <small class="text-muted">Today</small>
                       </div>
                     </div>
                     <div class="card-body">
@@ -682,10 +682,10 @@
                         <div class="col-md-3 col-6">
                           <div class="d-flex align-items-center">
                             <div class="badge rounded-pill bg-label-primary me-3 p-2">
-                              <i class="ti ti-chart-pie-2 ti-sm"></i>
+                              <i class="ti ti-currency-dollar ti-sm"></i>
                             </div>
                             <div class="card-info">
-                              <h5 class="mb-0">230k</h5>
+                              <h5 class="mb-0 ">₱ <span id="sales"></span>.00</h5>
                               <small>Sales</small>
                             </div>
                           </div>
@@ -693,22 +693,22 @@
                         <div class="col-md-3 col-6">
                           <div class="d-flex align-items-center">
                             <div class="badge rounded-pill bg-label-info me-3 p-2">
-                              <i class="ti ti-users ti-sm"></i>
+                              <i class="ti ti-receipt ti-sm"></i>
                             </div>
                             <div class="card-info">
-                              <h5 class="mb-0">8.549k</h5>
-                              <small>Customers</small>
+                              <h5 class="mb-0" id="transactions">8.549k</h5>
+                              <small>Transactions</small>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-3 col-6">
                           <div class="d-flex align-items-center">
                             <div class="badge rounded-pill bg-label-danger me-3 p-2">
-                              <i class="ti ti-shopping-cart ti-sm"></i>
+                              <i class="ti ti-archive ti-sm"></i>
                             </div>
                             <div class="card-info">
-                              <h5 class="mb-0">1.423k</h5>
-                              <small>Products</small>
+                              <h5 class="mb-0" id="cups">1.423k</h5>
+                              <small>Cups</small>
                             </div>
                           </div>
                         </div>
@@ -718,7 +718,7 @@
                               <i class="ti ti-currency-dollar ti-sm"></i>
                             </div>
                             <div class="card-info">
-                              <h5 class="mb-0">₱9745</h5>
+                              <h5 class="mb-0" id="">₱9745</h5>
                               <small>Revenue</small>
                             </div>
                           </div>
@@ -973,5 +973,7 @@
 
     <!-- Page JS -->
     <script src="../../admin/dashboard/assets/js/dashboards-crm.js"></script>
+    <script type="module" src="../../js/database.js"></script>
+    <script type="module" src="../../js/adminJS/dashboard.js"></script>
   </body>
 </html>
