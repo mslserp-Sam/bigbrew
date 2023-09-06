@@ -14,6 +14,7 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`),(sna
     snapchat.forEach(element => {
      
         $('#sales').text(element.val().Sales)
+        $('#cups').text(element.val().Cups)
     });
 },{
 

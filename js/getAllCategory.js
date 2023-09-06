@@ -11,7 +11,6 @@ const theYear = date.getFullYear();
 const theMonth = date.getMonth();
 const theDate = date.getDate();
 const theDay = date.getDay();
-localStorage.removeItem('arrSell');
 
 get(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`)).then((snapchat)=>{                  
     if(!snapchat.val())
@@ -381,22 +380,40 @@ $('#proceedClick').on('click', ()=>{
                     </tr>
                 `)
             transactions()
+        
+            if (window.matchMedia) {
+                var mediaQueryList = window.matchMedia('print');
+                mediaQueryList.addListener(function(mql) {
+                    if (mql.matches) {
+                        beforePrint();
+                    } else {
+                        afterPrint();
+                    }
+                });
+            }
+        
+            window.onbeforeprint = beforePrint;
+            window.onafterprint = afterPrint;  
+            var beforePrint = function() {
+                console.log('Functionality to run before printing.');
+            };
+        
+            var afterPrint = function() {
+                console.log('Functionality to run after printing');
+            };
             var printableDiv = document.getElementById('printableDiv').innerHTML;
             var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
             winPrint.document.write(`${printableDiv}`);
             winPrint.document.close();
             winPrint.focus();
             winPrint.print();
-            winPrint.close(); 
+            winPrint.close();     
+            
         }
     }
 })
-
 function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addOnsArr)
 {
-    var arrSell = [];
-    arrSell.push(JSON.parse(localStorage.getItem('arrSell')));
-    console.log(arrSell)
     var checker = localStorage.getItem("prod");
     var prods=[];
     if(checker)
@@ -478,18 +495,9 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                         </li>
                         
                     </ul>
-            `)
-            var arrSellData = `{
-                "prod": "${getName}",
-                "qty": "${getQuantity}",
-                "price" : "${getTotalPrice}",
-                "addons" : "${addOnsTotal != 0  ? 'Yes' : 'No'}",
-                "addonsPrice" : "${addOnsTotal != 0  ? addOnsTotal : 'No'}",
-                "addonsItem" : "${addOnsTotal != 0  ? addOnsArr : 'No'}"
-            }`
-            arrSell.push(JSON.parse(arrSellData));
-            console.log(arrSell)
-            localStorage.setItem('arrSell',JSON.stringify(JSON.parse(arrSellData)));
+            `)            
+           
+            console.log(getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal))
             $('#printBody').append(`
                 <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "") : ''}">
                     <td>
@@ -501,7 +509,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                         <h4 class="printQty">${getQuantity}</h4>
                     </td>
                     <td style="text-align: center !important; border: 1px solid #fff;">
-                        <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice + parseInt(addOnsTotal)}</h4>
+                        <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal)}</h4>
                     </td>
                 </tr>
             `);
@@ -571,20 +579,8 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
         $('.totalCash').html(tempPrice);
         h4Items = parseInt(h4Items) + parseInt(getQuantity);
         $('.h4Items').text(h4Items);
-        
-        var arrSellData = `{
-            "prod": "${getName}",
-            "qty": "${getQuantity}",
-            "price" : "${getTotalPrice}",
-            "addons" : "${addOnsTotal != 0  ? 'Yes' : 'No'}",
-            "addonsPrice" : "${addOnsTotal != 0  ? addOnsTotal : 'No'}",
-            "addonsItem" : "${addOnsTotal != 0  ? addOnsArr : 'No'}"
-        }`
-        arrSell.push(JSON.parse(arrSellData));
-        console.log(arrSell)
-        localStorage.setItem('arrSell',JSON.stringify(JSON.parse(arrSellData)));
 
-
+        console.log(getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal))
         $('#printBody').append(`
             <tr id="${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print${addOnsTotal != 0  ? 'Adds'+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "") : ''}">
                 <td>
@@ -596,7 +592,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                     <h4 class="printQty">${getQuantity}</h4>
                 </td>
                 <td style="text-align: center !important;">
-                    <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice + parseInt(addOnsTotal)}</h4>    
+                    <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal)}</h4>    
                 </td>
             </tr>
         `);
@@ -609,6 +605,7 @@ function transactions()
     var cash = localStorage.getItem('cash');
     var adds = $('#printBody').find('input').val();
     var totalCash = $('.totalCash').text();
+    var NowCups = 0;
 
     for(var i = 0; i<gettable.length; i++)
     {
@@ -616,20 +613,28 @@ function transactions()
         var productQty   = document.getElementsByClassName('printQty')[i].innerHTML;
         var productTotal = document.getElementsByClassName('printTotal')[i].innerHTML;
         var addons       = document.getElementsByClassName('add-ons')[i].value;
+        
         push(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+cash+'/'+trans+'/'), {
             product     : product,
             productAdds : addons ? JSON.stringify(atob(addons)) : 'No',
             productQty  : productQty,
             productTotal: productTotal
+        }).then(()=>{
+            NowCups += parseInt(productQty);
+            console.log(NowCups +' qty')
         })
         
     }
     var CurrentSale = 0;
+    var CurrentCups = 0;
     get(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/${cash}`)).then((snapchat)=>{
-        CurrentSale = snapchat.val().Sales
+        CurrentSale = snapchat.val().Sales,
+        CurrentCups = snapchat.val().Cups
     }).then(()=>{
+        console.log(CurrentSale +"/" + CurrentCups + "/"+ NowCups)
         update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/${cash}`), {
-            Sales: parseInt(totalCash) + parseInt(CurrentSale)
+            Sales: parseInt(totalCash) + parseInt(CurrentSale),
+            Cups: parseInt(CurrentCups) + parseInt(NowCups)
         }).then(()=>{
             $('#printBody').html();
             $('#totalCashChange').html();
@@ -638,6 +643,8 @@ function transactions()
             $('.totalCash').html('0');
             $('.h4Items').text(`0`);
             localStorage.removeItem('prod');
+            $('#printBody').html('');
+            console.log('pasok')
         })
     })
     
