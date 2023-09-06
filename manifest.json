@@ -1,0 +1,23 @@
+{
+  "background_color": "#f5f2ea",
+  "description": "BigBrew Coffee Shop",
+  "display": "standalone",
+  "name": "Big Brew",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "Big Brew",
+  "start_url": "/posLogin.html",
+  "theme_color": "#f5f2ea",
+  "categories": [
+    "food"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "../assets/bigbrewImage/brew3.png",
+      "type": "image/png",
+      "sizes": "183x183"
+    }
+  ],
+  "shortcuts": []
+}

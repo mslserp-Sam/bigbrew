@@ -12,17 +12,32 @@ const theMonth = date.getMonth();
 const theDate = date.getDate();
 const theDay = date.getDay();
 localStorage.removeItem('arrSell');
+
+get(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`)).then((snapchat)=>{                  
+    if(!snapchat.val())
+    {
+        location.href = "/poslogin.html";
+    }
+    else
+    {
+        snapchat.forEach((cashData)=>{
+            localStorage.setItem('cash',cashData.key)
+        })
+    }
+})
 $('#transacDate').text(`${days[theDay]}, ${months[theMonth]} ${theDate},  ${theYear}`)
 
 get(child(dbref, `Pos_Accounts`)).then((snapchat)=>{
     snapchat.forEach(element => {       
-      if(element.val().pin == localStorage.getItem('cashier'))
+      if(element.val().Pin == localStorage.getItem('cashier'))
       {
         $('#cashierName').text(element.val().FullName);
+        $('#pangalan').text(element.val().FullName);
       }
     });
   })
 generateSerial()
+
 function generateSerial() {
     'use strict';
     var chars = '1234567890',
@@ -320,9 +335,6 @@ function allProducts(key)
 }
 
 allProducts('wala');
-$('#cashPupop').on('click', ()=>{        
-    transactions()
-})
 $('#proceedClick').on('click', ()=>{    
     var totalCASH = parseFloat($('.totalCash').html());
     $('#totalCashChange').html("");
@@ -368,6 +380,7 @@ $('#proceedClick').on('click', ()=>{
                         </td>
                     </tr>
                 `)
+            transactions()
             var printableDiv = document.getElementById('printableDiv').innerHTML;
             var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
             winPrint.document.write(`${printableDiv}`);
@@ -617,6 +630,14 @@ function transactions()
     }).then(()=>{
         update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/${cash}`), {
             Sales: parseInt(totalCash) + parseInt(CurrentSale)
+        }).then(()=>{
+            $('#printBody').html();
+            $('#totalCashChange').html();
+            generateSerial()
+            $('.product-lists').remove();
+            $('.totalCash').html('0');
+            $('.h4Items').text(`0`);
+            localStorage.removeItem('prod');
         })
     })
     

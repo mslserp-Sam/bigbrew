@@ -104,8 +104,7 @@ $(document).ready(function()
                 }).then((result) => {
                   if (result.isConfirmed) {
                     var trans = generateSerial();
-                    localStorage.setItem('trans',trans)
-                    localStorage.setItem('cash',result.value)
+                    localStorage.setItem('trans',trans)                    
                     update(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`+result.value), {
                       Sales: 0
                     }).then(()=>{
