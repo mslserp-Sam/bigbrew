@@ -253,12 +253,12 @@ function allProducts(key)
                             var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
                             fullData.splice(indexz, 1);
                             localStorage.setItem('prod',JSON.stringify(fullData))               
-                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove`).remove();
-                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print`).remove();
                             tempPrice = (parseInt(tempPrice) - parseInt(getTotalPrice)) - parseInt(addOnsTotal);;
                             $('.totalCash').html(tempPrice);
-                            h4Items = parseInt(h4Items) - parseInt($('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty'));
+                            h4Items = parseInt(h4Items) - parseInt($('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty').text());
                             $('.h4Items').text(h4Items);
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}remove`).remove();
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}print`).remove();
                         }
                     })
                     $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removebtnAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).on('click',(e)=>{
@@ -272,12 +272,12 @@ function allProducts(key)
                             var tempPrice = parseInt($('.totalCash').html()), h4Items = $('.h4Items').text();
                             fullData.splice(indexz, 1);
                             localStorage.setItem('prod',JSON.stringify(fullData))
-                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removeAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
-                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}printAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
                             tempPrice = (parseInt(tempPrice) - parseInt(getTotalPrice)) - parseInt(addOnsTotal);
                             $('.totalCash').html(tempPrice);
-                            h4Items = parseInt(h4Items) - parseInt(getQuantity);
+                            h4Items = parseInt(h4Items) - parseInt($('#'+btoa(getName).replace(/[^a-zA-Z ]/g, "")+'qty').text());
                             $('.h4Items').text(h4Items);
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}removeAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
+                            $('#'+`${btoa(getName).replace(/[^a-zA-Z ]/g, "")}printAdds`+btoa(addOnsArr).replace(/[^a-zA-Z ]/g, "")).remove();
                         }
                     })
                 }
