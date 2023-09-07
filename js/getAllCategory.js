@@ -653,3 +653,9 @@ function transactions()
     })
     
 }
+// $('[id]').each(function(){
+//     var ids = $('[id="'+this.id+'"]');
+//         if (ids.length>1 && ids[0]==this){
+//             $("#"+this.id).last().remove();
+//         }
+//  });
