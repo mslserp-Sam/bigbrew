@@ -154,7 +154,7 @@
                                                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                 </div>
                                               <!-- <label for="nameSmall" class="form-label">Cash Amount </label> -->
-                                              <input type="text" id="insertedCashAmount" class="form-control" placeholder="Enter Cash Amount" />
+                                              <input type="number" id="insertedCashAmount" class="form-control" placeholder="Enter Cash Amount" onkeypress="return numberLang(event)"/>
                                             </div>
                                           </div>
                                           
@@ -1016,6 +1016,12 @@
     <script type="module" src="js/getAllCategory.js"></script>
     <script type="module" src="js/categorySelect.js"></script>
     <script>
+    function numberLang(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+        return true;
+    }
     </script>
 </body>
 
