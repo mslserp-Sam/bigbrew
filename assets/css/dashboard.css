@@ -1,0 +1,4 @@
+.transactionBody{
+   overflow-y: scroll;
+   max-height: 391px !important;
+}
