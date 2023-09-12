@@ -72,7 +72,7 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
             var quan = 0;
             element1.forEach(element => {
                 element.forEach(data =>{
-                    $('#totalTransacMon').text(counter++)
+                    // $('#totalTransacMon').text(counter++)
                   data.forEach(data2 =>{
                     //sortable+=`'${data2.val().product}': ${parseInt(data2.val().productTotal.replace('₱ ', ''))},`;
                     quan += parseInt(data2.val().productQty)
@@ -102,6 +102,30 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
 },{
 
 });
+
+onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
+    var allTrans = 0;
+
+    snapchat.forEach(day =>{
+        day.forEach(branch =>{
+            branch.forEach(cash =>{
+                cash.forEach(trans =>{
+                    if(trans.key != "Sales" && trans.key != "Cups"){
+                        allTrans++
+                    }
+                    
+                })
+            })
+        })
+    })
+    $('#totalTransacMon').text(allTrans)
+},{})
+
+
+
+
+
+
 {/* <li class="d-flex mb-3 pb-1 align-items-center">
     <div class="badge bg-label-success rounded me-3 p-2">
         <i class="ti ti-browser-check ti-sm"></i>
@@ -116,5 +140,3 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
         </div>
     </div>
 </li> */}
-
-
