@@ -354,7 +354,7 @@ $('#proceedClick').on('click', ()=>{
                                 Total
                             </label>
                             <label class="totalLabel" style="float: right;">
-                                ₱ ${parseFloat(totalAm)}
+                                ${parseFloat(totalAm)}.00
                             </label>
                         </td>
                     </tr>
@@ -364,7 +364,7 @@ $('#proceedClick').on('click', ()=>{
                                 Cash
                             </label>
                             <label style="float: right;">
-                                ₱ ${parseFloat(cashAm)}
+                                ${parseFloat(cashAm)}.00
                             </label>
                         </td>
                     </tr>
@@ -374,7 +374,7 @@ $('#proceedClick').on('click', ()=>{
                                 Change
                             </label>
                             <label style="float: right; font-size: 18px !important">
-                                ₱ ${parseFloat(changeAm)}
+                                ${parseFloat(changeAm)}.00
                             </label>
                         </td>
                     </tr>
@@ -513,7 +513,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                         <h4 class="printQty">${getQuantity}</h4>
                     </td>
                     <td style="text-align: center !important; border: 1px solid #fff;">
-                        <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal)}</h4>
+                        <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal)}.00</h4>
                     </td>
                 </tr>
             `);
@@ -596,7 +596,7 @@ function displayProd(getName,getImage,getTotalPrice,getQuantity,addOnsTotal,addO
                     <h4 class="printQty">${getQuantity}</h4>
                 </td>
                 <td style="text-align: center !important;">
-                    <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal)}</h4>    
+                    <h4 class="printTotal" style="margin-right: 0 !important;">₱ ${getTotalPrice? getTotalPrice : 0 + parseInt(addOnsTotal)}.00</h4>    
                 </td>
             </tr>
         `);
@@ -626,6 +626,26 @@ function transactions()
         }).then(()=>{
             NowCups += parseInt(productQty);
             console.log(NowCups +' qty')
+            var setDay = '', setData ='', setChecker=0;
+            get(child(dbref, `Sales_Product/${theYear}/${theMonth+1}`)).then((monmon)=>{
+                monmon.forEach(snapchat=>{
+                    snapchat.forEach(datas=>{
+                        if(datas.key == product)
+                        {
+                            setDay = snapchat.key;
+                            setData= datas.key; 
+                            setChecker = datas.val().total;
+                        }
+                    })
+                })
+            }).then(()=>{
+                var sets =setData?setData:product;
+                console.log(`Sales_Product/${theYear}/${theMonth+1}/${theDate}/`+sets)
+                var ans = parseInt(setChecker) + parseInt(productTotal.split(' ')[1]?productTotal.split(' ')[1]:productTotal);
+                update(child(dbref, `Sales_Product/${theYear}/${theMonth+1}/${theDate}/`+sets), {
+                    total : ans
+                })
+            })
         })
         
     }
