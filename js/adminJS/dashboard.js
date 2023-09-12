@@ -44,18 +44,21 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`),(sna
     var cups = 0;
     var sales = 0;
     var trans = 0;
-    snapchat.forEach(element => {
-        element.forEach(data =>{
-            trans += 1;
-            data.forEach(data2 =>{
-                sales += parseInt(data2.val().productTotal.replace('₱ ', ''));
-                cups += parseInt(data2.val().productQty);
+    if(snapchat.val())
+    {
+        snapchat.forEach(element => {
+            element.forEach(data =>{
+                trans += 1;
+                data.forEach(data2 =>{
+                    sales += parseInt(data2.val().productTotal.replace('₱ ', ''));
+                    cups += parseInt(data2.val().productQty);
+                })
             })
-        })
-    });
-    $('#transactions').text(trans -2)
-    $('#cups').text(cups)
-    $('#sales').text(sales)
+        });
+        $('#transactions').text(trans -2)
+        $('#cups').text(cups)
+        $('#sales').text(sales)
+    }
 },{
 
 });
