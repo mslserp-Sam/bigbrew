@@ -24,7 +24,8 @@ get(child(dbref, `Transactions/${theYear}/${theMonth+1}/${theDate}/1/`)).then((s
         })
     }
 })
-$('#transacDate').text(`${days[theDay]}, ${months[theMonth]} ${theDate},  ${theYear}`)
+$('#transacDate').text(`${months[theMonth]} ${theDate}, ${theYear}`)
+$('#transacDay').text(`${days[theDay]}`)
 
 get(child(dbref, `Pos_Accounts`)).then((snapchat)=>{
     snapchat.forEach(element => {       
