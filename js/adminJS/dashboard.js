@@ -83,7 +83,14 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
                                 </div>
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                     <div class="me-2">
+                                    <a data-bs-toggle="modal" data-bs-target="#ShowTrans" class="transClick"
+                                    data-data-transid="${data.key}"
+                                    data-data-cashier="${element1.key}"
+                                    data-data-onhand="${element.key}"
+                                    data-data-day="${transacData.key}"
+                                    >
                                         <h6 class="mb-0">#${data.key}</h6>
+                                    </a>
                                         <small class="text-muted d-block">Number of Cup Sold : ${data2.val().productQty}</small>
                                     </div>
                                     <div class="user-progress d-flex align-items-center gap-1">
@@ -97,8 +104,56 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
                 })
             });
             $('.transactionContent').html(html);
+                
+            
         })
     })
+    $('.transClick').on('click', function(){
+        // console.log($(this).data('data-transid'))
+        $('#accordionExample').html("")
+        var transaction_id = $(this).data('data-transid')
+        var trans_cashier = $(this).data('data-cashier')
+        var trans_onhand = $(this).data('data-onhand')
+        var trans_day = $(this).data('data-day')
+        $('.transactionTitle').text(`#${transaction_id}`);
+        var total = 0;
+        get(child(dbref, `Transactions/${theYear}/${theMonth+1}/${trans_day}/${trans_cashier}/${trans_onhand}/${transaction_id}`)).then((snapchat)=>{
+            snapchat.forEach(getEachItems =>{
+                var tot = getEachItems.val().productTotal
+                var totalText = tot.replace("₱ ", "")
+                total += parseInt(totalText)
+                $('#accordionExample').append(`
+                <div class="card accordion-item">
+                  <h2 class="accordion-header" id="headingOne${getEachItems.key}">
+                    <button
+                      type="button"
+                      class="accordion-button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#accordionOne${getEachItems.key}"
+                      aria-expanded="true"
+                      aria-controls="accordionOne${getEachItems.key}">
+                      ${getEachItems.val().product}
+                    </button>
+                  </h2>
+                  <div
+                    id="accordionOne${getEachItems.key}"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <b>Add-ons</b><span class="ms-3">&nbsp;&nbsp;${getEachItems.val().productAdds}</span><br>
+                      <b>Quantity</b><span class="ms-3">&nbsp;${getEachItems.val().productQty}</span><br>
+                      <b>Total</b><span class="ms-5">${getEachItems.val().productTotal}</span>
+                    </div>
+                  </div>
+                </div>
+                `)
+            })
+        }).then(()=>{
+            $('#tranTotalPrice').text(total);
+        })
+    })    
+
+    
 },{
 
 });
@@ -121,7 +176,10 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
     $('#totalTransacMon').text(allTrans)
 },{})
 
-
+function onTransactionClick(){
+    var transId = "aaa";
+    console.log(transId);
+}
 
 
 
