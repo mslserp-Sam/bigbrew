@@ -73,34 +73,31 @@ onValue(child(dbref, `Transactions/${theYear}/${theMonth+1}`),(snapchat) => {
             element1.forEach(element => {
                 element.forEach(data =>{
                     // $('#totalTransacMon').text(counter++)
-                  data.forEach(data2 =>{
-                    //sortable+=`'${data2.val().product}': ${parseInt(data2.val().productTotal.replace('₱ ', ''))},`;
-                    quan += parseInt(data2.val().productQty)
                   
+                    //sortable+=`'${data2.val().product}': ${parseInt(data2.val().productTotal.replace('₱ ', ''))},`;
+                   
+                  if(data.key != "Cups" && data.key != "Sales"){
                     html += `<li class="d-flex mb-3 pb-1 align-items-center">
-                                <div class="badge bg-label-success rounded me-3 p-2">
-                                    <i class="ti ti-browser-check ti-sm"></i>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                    <a data-bs-toggle="modal" data-bs-target="#ShowTrans" class="transClick"
-                                    data-data-transid="${data.key}"
-                                    data-data-cashier="${element1.key}"
-                                    data-data-onhand="${element.key}"
-                                    data-data-day="${transacData.key}"
-                                    >
-                                        <h6 class="mb-0">#${data.key}</h6>
-                                    </a>
-                                        <small class="text-muted d-block">Number of Cup Sold : ${data2.val().productQty}</small>
-                                    </div>
-                                    <div class="user-progress d-flex align-items-center gap-1">
-                                        <h6 class="mb-0 text-success">+₱ ${parseInt(data2.val().productTotal.replace('₱ ', ''))}</h6>
-                                    </div>
-                                </div>
-                            </li>`;
-                    
-        
-                  })
+                        <div class="badge bg-label-success rounded me-3 p-2">
+                            <i class="ti ti-browser-check ti-sm"></i>
+                        </div>
+                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                            <a data-bs-toggle="modal" data-bs-target="#ShowTrans" class="transClick"
+                            data-data-transid="${data.key}"
+                            data-data-cashier="${element1.key}"
+                            data-data-onhand="${element.key}"
+                            data-data-day="${transacData.key}"
+                            >
+                                <h6 class="mb-0">#${data.key}</h6>
+                            </a>
+                            </div>
+                            <div class="user-progress d-flex align-items-center gap-1">
+                                
+                            </div>
+                        </div>
+                    </li>`;
+                  }
                 })
             });
             $('.transactionContent').html(html);
